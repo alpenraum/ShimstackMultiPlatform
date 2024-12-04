@@ -1,14 +1,16 @@
 Multiplatform continuation of [Shimstack](https://www.github.com/alpenraum/shimstack)
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+# Shimstack
+This is sandbox / passion project for me to try out ideas, improve my skills, and (hopefully) some day to publish.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## Architecture
+This project is based on Google's best practice for both Architecture and modularization found in [Now in Android](https://github.com/android/nowinandroid).
+
+![modularization-graph drawio](https://github.com/alpenraum/Shimstack/assets/38424979/80cb8eba-656c-430c-85ff-12f8909ab2f4)
+
+(the more I work with this the less happy I am. It is difficult to reach a proper separation of concerns)
 
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+## The rest is WIP
+
+![](http://cataas.com/cat/gif)
