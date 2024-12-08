@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
+    id("kotlin-parcelize") // needed only for non-primitive classes
 }
 
 kotlin {
@@ -48,8 +50,10 @@ kotlin {
             implementation(libs.koin.compose.viewmodel.nav)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose)
+            implementation(libs.koin.core)
 
             implementation(libs.touchlab.kermit)
+            implementation(libs.kotlinx.serialization.json)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

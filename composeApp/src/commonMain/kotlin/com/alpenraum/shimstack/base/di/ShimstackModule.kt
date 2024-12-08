@@ -11,6 +11,10 @@ fun shimstackModule() =
         single { Greeting(get()) }
 
         factory { ShimstackLogger(tag = null) }
+
+        // region viewModels
+
+        // end Region
     }
 
 private inline fun <reified T> Scope.getWith(vararg params: Any?): T = get(parameters = { parametersOf(*params) })

@@ -6,7 +6,7 @@ end_of_line = lf
 indent_size = 4
 indent_style = space
 insert_final_newline = false
-max_line_length = 140
+max_line_length = 130
 tab_width = 4
 ij_continuation_indent_size = 8
 ij_formatter_off_tag = @formatter:off
@@ -380,7 +380,6 @@ ktlint_modifier_missing_check_ignore_when_annotated_with = Destination
 ktlint_standard_property-naming = disabled
 ktlint-standard_backing-property-naming = disabled
 compose_disallow_material2 = true
-
 
 
 [{*.markdown,*.md}]
