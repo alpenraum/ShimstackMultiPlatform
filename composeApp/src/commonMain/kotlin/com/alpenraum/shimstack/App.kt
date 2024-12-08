@@ -1,36 +1,47 @@
 package com.alpenraum.shimstack
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
-
-import shimstackmultiplatform.composeapp.generated.resources.Res
-import shimstackmultiplatform.composeapp.generated.resources.compose_multiplatform
+import androidx.navigation.compose.rememberNavController
+import com.alpenraum.shimstack.base.di.navigationModule
+import com.alpenraum.shimstack.base.di.shimstackModule
+import com.alpenraum.shimstack.ui.base.compose.AppTheme
+import com.alpenraum.shimstack.ui.base.navigation.ShimstackNavHost
+import org.koin.compose.KoinApplication
 
 @Composable
-@Preview
 fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
+    KoinApplication(application = {
+        modules(shimstackModule(), navigationModule())
+    }) {
+        AppTheme {
+            Surface(Modifier.fillMaxSize()) {
+//                var showContent by remember { mutableStateOf(false) }
+//                Column(
+//                    Modifier.fillMaxWidth().safeDrawingPadding(),
+//                    horizontalAlignment = Alignment.CenterHorizontally,
+//                ) {
+//                    Button(onClick = { showContent = !showContent }) {
+//                        Text("Click me!")
+//                    }
+//
+//                    val greet = koinInject<Greeting>()
+//                    AnimatedVisibility(showContent) {
+//                        val greeting = remember { greet.greet() }
+//                        Column(
+//                            Modifier.fillMaxWidth(),
+//                            horizontalAlignment = Alignment.CenterHorizontally,
+//                        ) {
+//                            Image(painterResource(Res.drawable.compose_multiplatform), null)
+//                            Text("Compose: $greeting")
+//                        }
+//                    }
+//                }
+                val navController = rememberNavController()
+                ShimstackNavHost(navController, modifier = Modifier.safeDrawingPadding())
             }
         }
     }

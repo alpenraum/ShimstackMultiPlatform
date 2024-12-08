@@ -11,9 +11,19 @@ androidx-espresso-core = "3.6.1"
 androidx-lifecycle = "2.8.3"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
-compose-multiplatform = "1.7.0"
+compose-multiplatform = "1.7.1"
 junit = "4.13.2"
 kotlin = "2.0.21"
+androidx-splashscreen = "1.0.1"
+androidx-compose-bom = "2024.11.00"
+material-icons-core = "1.7.5"
+com-google-android-material = "1.12.0"
+
+koin = "4.0.1-Beta1"
+kotlinxSerializationJson = "1.6.3"
+kotlinxSerialization = "1.9.0"
+kermit = "2.0.5"
+
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -28,6 +38,21 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-splashscreen" }
+
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-bom" }
+
+#Koin
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+koin-compose-viewmodel-nav = { module = "io.insert-koin:koin-compose-viewmodel-navigation", version.ref = "koin" }
+
+#kermit
+touchlab-kermit = { module = "co.touchlab:kermit-core", version.ref = "kermit" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -35,3 +60,4 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinxSerialization" }
