@@ -1,4 +1,4 @@
-package com.alpenraum.shimstack.ui.base.compose
+package com.alpenraum.shimstack.ui.base.compose.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

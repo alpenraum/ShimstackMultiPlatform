@@ -19,10 +19,12 @@ androidx-compose-bom = "2024.11.00"
 material-icons-core = "1.7.5"
 com-google-android-material = "1.12.0"
 
+
 koin = "4.0.1-Beta1"
 kotlinxSerializationJson = "1.6.3"
 kotlinxSerialization = "1.9.0"
 kermit = "2.0.5"
+
 
 
 [libraries]
@@ -51,6 +53,7 @@ koin-compose-viewmodel-nav = { module = "io.insert-koin:koin-compose-viewmodel-n
 #kermit
 touchlab-kermit = { module = "co.touchlab:kermit-core", version.ref = "kermit" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
 
 
 
