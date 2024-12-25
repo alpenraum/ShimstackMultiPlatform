@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.alpenraum.shimstack.ui.base.compose.fadeIn
 import com.alpenraum.shimstack.ui.base.compose.fadeOut
+import com.alpenraum.shimstack.ui.homescreen.HomeScreenFeature
 
 @Composable
 fun BottomNavigationGraph(
@@ -34,8 +35,7 @@ fun BottomNavigationGraph(
         }
     ) {
         composable(BottomNavigationItem.Home.route) {
-            Text("homescreen")
-            // HomeScreen(navController = featureNavController)
+            HomeScreenFeature(navController = featureNavController)
         }
         composable(BottomNavigationItem.Settings.route) {
             Text("Settings")

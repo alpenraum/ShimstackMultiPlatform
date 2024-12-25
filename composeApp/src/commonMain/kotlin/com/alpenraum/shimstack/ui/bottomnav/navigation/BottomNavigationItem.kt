@@ -4,8 +4,8 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import shimstackmultiplatform.composeapp.generated.resources.Res
 import shimstackmultiplatform.composeapp.generated.resources.home_24px
+import shimstackmultiplatform.composeapp.generated.resources.settings
 import shimstackmultiplatform.composeapp.generated.resources.title_home
-import shimstackmultiplatform.composeapp.generated.resources.title_settings
 
 sealed class BottomNavigationItem(
     val route: String,
@@ -19,7 +19,7 @@ sealed class BottomNavigationItem(
     )
 
     data object Settings :
-        BottomNavigationItem("settings", Res.string.title_settings, Res.drawable.home_24px)
+        BottomNavigationItem("settings", Res.string.settings, Res.drawable.home_24px)
 
     companion object {
         fun asList() = listOf(Home, Settings)
