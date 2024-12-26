@@ -6,16 +6,18 @@ import co.touchlab.kermit.Severity
 import co.touchlab.kermit.loggerConfigInit
 import co.touchlab.kermit.platformLogWriter
 import com.alpenraum.shimstack.base.BuildInfo
+import org.koin.core.annotation.Factory
 import kotlin.jvm.JvmOverloads
 
 // TODO: create interface and second "prod"-logger that handles uploading to e.g crashlytics
+@Factory
 class ShimstackLogger(
     config: LoggerConfig =
         loggerConfigInit(
             platformLogWriter(),
-            minSeverity = loggerMinSeverity(),
+            minSeverity = loggerMinSeverity()
         ),
-    val tag: String? = null,
+    val tag: String? = null
 ) : BaseLogger(config) {
     fun generateTag() = tag ?: Exception().stackTraceToString()
 //            .first { it.cl !in fqcnIgnore }
@@ -25,7 +27,7 @@ class ShimstackLogger(
     inline fun v(
         throwable: Throwable? = null,
         tag: String = generateTag(),
-        message: () -> String,
+        message: () -> String
     ) {
         logBlock(Severity.Verbose, tag, throwable, message)
     }
@@ -34,7 +36,7 @@ class ShimstackLogger(
     inline fun d(
         throwable: Throwable? = null,
         tag: String = generateTag(),
-        message: () -> String,
+        message: () -> String
     ) {
         logBlock(Severity.Debug, tag, throwable, message)
     }
@@ -43,7 +45,7 @@ class ShimstackLogger(
     inline fun i(
         throwable: Throwable? = null,
         tag: String = generateTag(),
-        message: () -> String,
+        message: () -> String
     ) {
         logBlock(Severity.Info, tag, throwable, message)
     }
@@ -52,7 +54,7 @@ class ShimstackLogger(
     inline fun w(
         throwable: Throwable? = null,
         tag: String = generateTag(),
-        message: () -> String,
+        message: () -> String
     ) {
         logBlock(Severity.Warn, tag, throwable, message)
     }
@@ -61,7 +63,7 @@ class ShimstackLogger(
     inline fun e(
         throwable: Throwable? = null,
         tag: String = generateTag(),
-        message: () -> String,
+        message: () -> String
     ) {
         logBlock(Severity.Error, tag, throwable, message)
     }
@@ -70,7 +72,7 @@ class ShimstackLogger(
     inline fun a(
         throwable: Throwable? = null,
         tag: String = generateTag(),
-        message: () -> String,
+        message: () -> String
     ) {
         logBlock(Severity.Assert, tag, throwable, message)
     }
@@ -79,7 +81,7 @@ class ShimstackLogger(
     inline fun v(
         messageString: String,
         throwable: Throwable? = null,
-        tag: String = generateTag(),
+        tag: String = generateTag()
     ) {
         log(Severity.Verbose, tag, throwable, messageString)
     }
@@ -88,7 +90,7 @@ class ShimstackLogger(
     inline fun d(
         messageString: String,
         throwable: Throwable? = null,
-        tag: String = generateTag(),
+        tag: String = generateTag()
     ) {
         log(Severity.Debug, tag, throwable, messageString)
     }
@@ -97,7 +99,7 @@ class ShimstackLogger(
     inline fun i(
         messageString: String,
         throwable: Throwable? = null,
-        tag: String = generateTag(),
+        tag: String = generateTag()
     ) {
         log(Severity.Info, tag, throwable, Exception().stackTraceToString())
     }
@@ -106,7 +108,7 @@ class ShimstackLogger(
     inline fun w(
         messageString: String,
         throwable: Throwable? = null,
-        tag: String = generateTag(),
+        tag: String = generateTag()
     ) {
         log(Severity.Warn, tag, throwable, messageString)
     }
@@ -115,7 +117,7 @@ class ShimstackLogger(
     inline fun e(
         messageString: String,
         throwable: Throwable? = null,
-        tag: String = generateTag(),
+        tag: String = generateTag()
     ) {
         log(Severity.Error, tag, throwable, messageString)
     }
@@ -124,7 +126,7 @@ class ShimstackLogger(
     inline fun a(
         messageString: String,
         throwable: Throwable? = null,
-        tag: String = generateTag(),
+        tag: String = generateTag()
     ) {
         log(Severity.Assert, tag, throwable, messageString)
     }

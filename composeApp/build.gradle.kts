@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -7,6 +8,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
     id("kotlin-parcelize") // needed only for non-primitive classes
 }
 
@@ -21,7 +24,7 @@ kotlin {
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64(),
+        iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
@@ -41,6 +44,8 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(compose.material3AdaptiveNavigationSuite)
+            implementation(compose.materialIconsExtended)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -51,13 +56,41 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose)
             implementation(libs.koin.core)
+            api(libs.koin.annotations)
 
             implementation(libs.touchlab.kermit)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.material3.window.size)
+
+            implementation(libs.kotlinx.collections.immutable)
+
+            implementation(libs.eygraber.compose.placeholder)
+
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.sqlite.bundled)
+
+            implementation(libs.datastore.preferences)
+            implementation(libs.datastore)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
+    }
+}
+
+room {
+    schemaDirectory("$projectDir/db-schemas")
+}
+
+dependencies {
+    listOf(
+        "kspAndroid",
+        "kspIosSimulatorArm64",
+        "kspIosX64",
+        "kspIosArm64"
+    ).forEach {
+        add(it, libs.koin.annotations.ksp)
+        add(it, libs.androidx.room.compiler)
     }
 }
 
@@ -103,4 +136,28 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+}
+
+dependencies {
+    add("kspCommonMainMetadata", libs.koin.annotations.ksp)
+    add("kspAndroid", libs.koin.annotations.ksp)
+    add("kspIosX64", libs.koin.annotations.ksp)
+    add("kspIosArm64", libs.koin.annotations.ksp)
+    add("kspIosSimulatorArm64", libs.koin.annotations.ksp)
+}
+
+// KSP Metadata Trigger
+project.tasks.withType(KotlinCompilationTask::class.java).configureEach {
+    if (name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
+}
+
+ksp {
+    arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
+    arg("KOIN_CONFIG_CHECK", "false")
+}
+
+kotlin.sourceSets.commonMain {
+    kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
 }

@@ -104,7 +104,7 @@ class ShimstackLoggerTest {
                     at 82  dyld                                0x10492940f        0x0 + 4371682319 
                     at 83  ???                                 0x10466a273        0x0 + 4368802419 
                 ) kotlin.Exception
-                """.trimIndent() to "Greeting",
+                """.trimIndent() to "Greeting"
             )
     }
 }

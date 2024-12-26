@@ -45,10 +45,14 @@ class ShimstackLoggerTest {
                     "\tat androidx.compose.runtime.Recomposer.access,performRecompose(Recomposer.kt:132)\n" +
                     "at androidx.compose.runtime.Recomposer,runRecomposeAndApplyChanges,2,1.invoke(Recomposer.kt:616)\n" +
                     "\tat androidx.compose.runtime.Recomposer,runRecomposeAndApplyChanges,2,1.invoke(Recomposer.kt:585)\n" +
-                    "a tandroidx.compose.ui.platform.AndroidUiFrameClock,withFrameNanos,2,callback,1.doFrame(AndroidUiFrameClock.android.kt:41)\n" +
-                    "\tat androidx.compose.ui.platform.AndroidUiDispatcher.performFrameDispatch(AndroidUiDispatcher.android.kt:109)\n" +
-                    "at androidx.compose.ui.platform.AndroidUiDispatcher.access,performFrameDispatch(AndroidUiDispatcher.android.kt:41)\n" +
-                    "\tat androidx.compose.ui.platform.AndroidUiDispatcher,dispatchCallback,1.doFrame(AndroidUiDispatcher.android.kt:69)\n" +
+                    "a tandroidx.compose.ui.platform.AndroidUiFrameClock,withFrameNanos,2,callback,1.doFrame(AndroidUiFrame" +
+                    "Clock.android.kt:41)\n" +
+                    "\tat androidx.compose.ui.platform.AndroidUiDispatcher.performFrameDispatch(AndroidUiDispatcher." +
+                    "android.kt:109)\n" +
+                    "at androidx.compose.ui.platform.AndroidUiDispatcher.access,performFrameDispatch(AndroidUiDispatcher." +
+                    "android.kt:41)\n" +
+                    "\tat androidx.compose.ui.platform.AndroidUiDispatcher,dispatchCallback,1.doFrame(AndroidUiDispatcher." +
+                    "android.kt:69)\n" +
                     "at android.view.Choreographer,CallbackRecord.run(Choreographer.java:1404)\n" +
                     "\tat android.view.Choreographer,CallbackRecord.run(Choreographer.java:1415)\n" +
                     "\tat android.view.Choreographer.doCallbacks(Choreographer.java:1015)\n" +
@@ -60,7 +64,7 @@ class ShimstackLoggerTest {
                     "\tat android.os.Looper.loop(Looper.java:317)\n" +
                     "\tat android.app.ActivityThread.main(ActivityThread.java:8705)\n" +
                     "\tat java.lang.reflect.Method.invoke(NativeMethod)\n" +
-                    "at com.android.internal.os.RuntimeInit,MethodAndArgsCaller.run(RuntimeInit.java:580)" to "Greeting",
+                    "at com.android.internal.os.RuntimeInit,MethodAndArgsCaller.run(RuntimeInit.java:580)" to "Greeting"
             )
     }
 }

@@ -13,16 +13,28 @@ androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
 compose-multiplatform = "1.7.1"
 junit = "4.13.2"
-kotlin = "2.0.21"
+kotlin = "2.1.0"
 androidx-splashscreen = "1.0.1"
-androidx-compose-bom = "2024.11.00"
 material-icons-core = "1.7.5"
-com-google-android-material = "1.12.0"
+
 
 koin = "4.0.1-Beta1"
+koinAnnotations = "2.0.0-Beta2"
 kotlinxSerializationJson = "1.6.3"
 kotlinxSerialization = "1.9.0"
+kotlinxCollectionsImmutable = "0.3.8"
 kermit = "2.0.5"
+
+sqlite = "2.5.0-SNAPSHOT"
+androidx-room = "2.7.0-alpha12"
+datastore = "1.1.1"
+
+# Annotations procesing
+ksp = "2.0.20-1.0.25"
+
+# ui
+compose-placeholder = "1.0.8"
+
 
 
 [libraries]
@@ -39,18 +51,31 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-splashscreen" }
+material3-window-size = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "compose-multiplatform" }
+datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
-androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-bom" }
 
 #Koin
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 koin-compose-viewmodel-nav = { module = "io.insert-koin:koin-compose-viewmodel-navigation", version.ref = "koin" }
+koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koinAnnotations" }
+koin-annotations-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinAnnotations" }
 
 #kermit
 touchlab-kermit = { module = "co.touchlab:kermit-core", version.ref = "kermit" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+kotlinx-collections-immutable= { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
+
+# ui
+eygraber-compose-placeholder = {module="com.eygraber:compose-placeholder-material3", version.ref="compose-placeholder"}
+
+# room
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
+sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 
 
 
@@ -61,3 +86,5 @@ composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-mu
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinxSerialization" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
+room = { id = "androidx.room", version.ref = "androidx-room" }

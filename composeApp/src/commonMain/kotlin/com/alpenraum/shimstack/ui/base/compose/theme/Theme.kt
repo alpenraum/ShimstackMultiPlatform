@@ -1,4 +1,4 @@
-package com.alpenraum.shimstack.ui.base.compose
+package com.alpenraum.shimstack.ui.base.compose.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -75,9 +75,7 @@ private val DarkColors =
 @Composable
 fun AppTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content:
-        @Composable()
-        () -> Unit
+    content: @Composable () -> Unit
 ) {
     val colors =
         if (!useDarkTheme) {

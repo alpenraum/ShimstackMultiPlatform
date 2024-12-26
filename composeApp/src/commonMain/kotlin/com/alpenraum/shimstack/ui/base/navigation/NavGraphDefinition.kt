@@ -8,6 +8,6 @@ interface NavGraphDefinition<T : NavDestinationDefinition> {
 
     fun build(
         navGraphBuilder: NavGraphBuilder,
-        navController: NavController,
+        navController: NavController
     )
 }

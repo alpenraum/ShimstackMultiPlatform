@@ -20,12 +20,12 @@ inline fun <reified K, reified V> multibindingQualifier(suffix: String? = null):
 
 inline fun <reified K, reified V> Module.intoMultibinding(
     key: K,
-    value: V,
+    value: V
 ) {
     var multibinding: Multibinding<K, V>? = null
     single(
         qualifier = named("${K::class.getFullName()}_${V::class.getFullName()}_$key"),
-        createdAtStart = true,
+        createdAtStart = true
     ) {
         multibinding = get(multibindingQualifier<K, V>())
         multibinding!![key] = value

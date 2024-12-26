@@ -1,4 +1,4 @@
-package com.alpenraum.shimstack.ui.base.compose
+package com.alpenraum.shimstack.ui.base.compose.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -380,6 +380,7 @@ ktlint_modifier_missing_check_ignore_when_annotated_with = Destination
 ktlint_standard_property-naming = disabled
 ktlint-standard_backing-property-naming = disabled
 compose_disallow_material2 = true
+compose_lambda_param_in_effect = disabled
 
 
 [{*.markdown,*.md}]
