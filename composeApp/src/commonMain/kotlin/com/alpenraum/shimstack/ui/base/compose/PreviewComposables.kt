@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.alpenraum.shimstack.ui.base.compose.theme.AppTheme
 import com.alpenraum.shimstack.ui.base.compose.compositionlocal.LocalWindowSizeClass
+import com.alpenraum.shimstack.ui.base.compose.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable

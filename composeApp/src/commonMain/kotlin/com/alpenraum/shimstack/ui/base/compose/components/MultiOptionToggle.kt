@@ -86,7 +86,12 @@ fun MultiOptionToggle(
                     ) {
                         val textColor =
                             animateColorAsState(
-                                targetValue = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
+                                targetValue =
+                                    if (isSelected) {
+                                        MaterialTheme.colorScheme.onPrimary
+                                    } else {
+                                        MaterialTheme.colorScheme.onSurface
+                                    }
                             )
                         Text(
                             text = stringResource(option),

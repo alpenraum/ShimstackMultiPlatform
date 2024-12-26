@@ -37,7 +37,6 @@ import com.alpenraum.shimstack.base.BaseViewModel
 import com.eygraber.compose.placeholder.PlaceholderHighlight
 import com.eygraber.compose.placeholder.material3.fade
 import com.eygraber.compose.placeholder.placeholder
-
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -78,8 +77,7 @@ fun CardWithPlaceholder(
     placeholderColor: Color,
     modifier: Modifier = Modifier,
     content:
-    @Composable()
-    ColumnScope.() -> Unit
+        @Composable ColumnScope.() -> Unit
 ) {
     Card(
         modifier =
@@ -97,12 +95,11 @@ fun CardWithPlaceholder(
 fun ShimstackCard(
     modifier: Modifier = Modifier,
     content:
-    @Composable()
-    ColumnScope.() -> Unit
+        @Composable ColumnScope.() -> Unit
 ) {
     Card(
         modifier =
-            modifier,
+        modifier,
 //        colors = CardDefaults.cardColors(
 //            containerColor = MaterialTheme.colorScheme.secondaryContainer,
 //            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
@@ -236,7 +233,7 @@ fun TextInput(
 
 @Composable
 fun ButtonText(
-     textRes: StringResource,
+    textRes: StringResource,
     modifier: Modifier = Modifier,
     style: TextStyle = MaterialTheme.typography.bodyMedium,
     weight: FontWeight = FontWeight.SemiBold

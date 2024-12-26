@@ -1,7 +1,6 @@
 package com.alpenraum.shimstack.base
 
 import androidx.core.bundle.Bundle
-import androidx.lifecycle.ViewModel
 import com.alpenraum.shimstack.base.di.KoinViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob

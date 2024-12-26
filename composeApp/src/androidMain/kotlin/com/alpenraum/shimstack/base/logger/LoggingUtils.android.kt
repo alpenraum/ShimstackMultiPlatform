@@ -2,7 +2,7 @@ package com.alpenraum.shimstack.base.logger
 
 actual fun ShimstackLogger.getClassNameFromStacktrace(
     stackTrace: String,
-    loggerClass: String,
+    loggerClass: String
 ): String? {
     val regex = "(\\.\\w+\\.)(?=(\\w+\\())".toRegex()
 
