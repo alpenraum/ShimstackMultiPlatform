@@ -1,11 +1,13 @@
 package com.alpenraum.shimstack.data.biketemplate
 
+import com.alpenraum.shimstack.base.logger.ShimstackLogger
 import com.alpenraum.shimstack.data.db.BikeTemplateDAO
 import com.alpenraum.shimstack.data.model.bike.BikeTemplateDTO
 import com.alpenraum.shimstack.data.toDTO
 import com.alpenraum.shimstack.data.toDomain
 import com.alpenraum.shimstack.domain.bikeTemplate.BikeTemplateRepository
 import com.alpenraum.shimstack.domain.model.biketemplate.BikeTemplate
+import com.alpenraum.shimstack.domain.runWithErrorHandling
 import kotlinx.serialization.json.Json
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.koin.core.annotation.Single
@@ -13,14 +15,20 @@ import shimstackmultiplatform.composeapp.generated.resources.Res
 
 @Single(binds = [BikeTemplateRepository::class])
 class LocalBikeTemplateRepository(
-    private val bikeTemplateDAO: BikeTemplateDAO
+    private val bikeTemplateDAO: BikeTemplateDAO,
+    private val shimstackLogger: ShimstackLogger
 ) : BikeTemplateRepository {
     override suspend fun prepopulateData() {
         val json = loadFileFromAssets(fileName = "bike_templates", fileEnding = "json")
 
-        createBikeTemplates(Json.decodeFromString<List<BikeTemplateDTO>>(json))
+        runWithErrorHandling<Throwable>({ shimstackLogger.e("Error while parsing bike templates", it) }) {
+            createBikeTemplates(Json.decodeFromString<List<BikeTemplateDTO>>(json))
+        }
     }
 
+    /** x - string is there because there is some compiler issue that makes both
+     * createBikeTemplates signatures the same (even though they clearly arent)
+     */
     private suspend fun createBikeTemplates(
         list: List<BikeTemplateDTO>,
         x: String = ""
@@ -43,7 +51,6 @@ class LocalBikeTemplateRepository(
         fileEnding: String
     ): String {
         val readBytes = Res.readBytes("files/$fileName.$fileEnding")
-        val jsonString = readBytes.decodeToString()
-        return Json.decodeFromString(jsonString)
+        return readBytes.decodeToString()
     }
 }

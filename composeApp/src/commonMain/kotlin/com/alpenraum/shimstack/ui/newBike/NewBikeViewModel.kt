@@ -38,11 +38,13 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.sample
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
+import org.koin.android.annotation.KoinViewModel
 import shimstackmultiplatform.composeapp.generated.resources.Res
 import shimstackmultiplatform.composeapp.generated.resources.error_create_bike
 import kotlin.time.Duration.Companion.milliseconds
 
 // FIXME: Really unhappy with the state management in this, needs to be done differently. Needs to be split up into separate screens and VMs
+@KoinViewModel
 class NewBikeViewModel(
     private val bikeTemplateRepository: LocalBikeTemplateRepository,
     private val bikeRepository: LocalBikeRepository,

@@ -65,7 +65,7 @@ fun OnboardingScreen(
         )
         Spacer(modifier = Modifier.height(32.dp))
         Card(
-            shape = RoundedCornerShape(8.dp, 8.dp, 0.dp, 0.dp),
+            shape = RoundedCornerShape(8.dp, 8.dp, 8.dp, 8.dp),
             modifier =
                 Modifier
                     .weight(1.0f)

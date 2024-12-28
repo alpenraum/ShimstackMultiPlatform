@@ -10,6 +10,6 @@ interface NewBikeNavigator {
 @Single
 class NewBikeNavigatorImpl : NewBikeNavigator {
     override fun navigateToNewBike(navController: NavController) {
-        navController.navigate(NewBikeNavGraph.route)
+        navController.navigate(NewBikeRoute.NewBikeRouteRoot)
     }
 }

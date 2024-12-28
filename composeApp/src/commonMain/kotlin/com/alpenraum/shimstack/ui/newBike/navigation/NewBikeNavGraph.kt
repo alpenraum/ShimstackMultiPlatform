@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.alpenraum.shimstack.ui.base.navigation.NavDestinationDefinition
 import com.alpenraum.shimstack.ui.base.navigation.NavGraphDefinition
-import com.alpenraum.shimstack.ui.onboarding.OnboardingFeature
+import com.alpenraum.shimstack.ui.newBike.NewBikeFeature
 import kotlinx.serialization.Serializable
 import org.koin.core.annotation.Single
 
@@ -29,7 +29,7 @@ class NewBikeNavGraph : NavGraphDefinition<NewBikeRoute> {
             startDestination = startDestinationRoute
         ) {
             composable<NewBikeRoute.NewBike> {
-                OnboardingFeature(navController)
+                NewBikeFeature(navController)
             }
         }
     }

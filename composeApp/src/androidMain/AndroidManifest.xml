@@ -9,7 +9,8 @@
         android:supportsRtl="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:theme="@style/Theme.Shimstack.Starting">
+        android:theme="@style/Theme.Shimstack.Starting"
+            android:name=".ShimstackApplication">
         <activity
             android:exported="true"
             android:name=".MainActivity">

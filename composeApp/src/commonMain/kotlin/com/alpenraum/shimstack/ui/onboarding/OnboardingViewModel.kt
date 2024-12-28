@@ -9,7 +9,9 @@ import com.alpenraum.shimstack.ui.bottomnav.MainNavigator
 import com.alpenraum.shimstack.ui.newBike.navigation.NewBikeNavigator
 import com.alpenraum.shimstack.ui.onboarding.navigation.OnboardingRoute
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class OnboardingViewModel(
     dispatchersProvider: DispatchersProvider,
     private val dataStore: ShimstackDatastore,
