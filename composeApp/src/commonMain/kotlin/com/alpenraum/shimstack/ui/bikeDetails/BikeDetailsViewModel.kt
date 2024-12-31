@@ -13,9 +13,9 @@ import com.alpenraum.shimstack.domain.bikeservice.ValidateBikeUseCase
 import com.alpenraum.shimstack.domain.model.bike.Bike
 import com.alpenraum.shimstack.domain.model.bike.BikeType
 import com.alpenraum.shimstack.domain.model.measurementunit.Distance
+import com.alpenraum.shimstack.domain.model.measurementunit.MeasurementUnitType
 import com.alpenraum.shimstack.domain.model.measurementunit.Pressure
 import com.alpenraum.shimstack.domain.userSettings.GetUserSettingsUseCase
-import com.alpenraum.shimstack.model.measurementunit.MeasurementUnitType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

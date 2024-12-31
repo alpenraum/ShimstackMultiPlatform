@@ -1,7 +1,5 @@
 package com.alpenraum.shimstack.domain.model.measurementunit
 
-import com.alpenraum.shimstack.model.measurementunit.MeasurementUnitType
-
 interface MeasurementUnit {
     fun asMetric(): Double
 

@@ -49,10 +49,10 @@ import com.alpenraum.shimstack.domain.bikeservice.ValidateBikeUseCase
 import com.alpenraum.shimstack.domain.model.bike.Bike
 import com.alpenraum.shimstack.domain.model.bike.BikeType
 import com.alpenraum.shimstack.domain.model.measurementunit.Distance
+import com.alpenraum.shimstack.domain.model.measurementunit.MeasurementUnitType
 import com.alpenraum.shimstack.domain.model.measurementunit.Pressure
 import com.alpenraum.shimstack.domain.model.suspension.Damping
 import com.alpenraum.shimstack.domain.model.suspension.Suspension
-import com.alpenraum.shimstack.model.measurementunit.MeasurementUnitType
 import com.alpenraum.shimstack.ui.base.compose.ClassKeyedCrossfade
 import com.alpenraum.shimstack.ui.base.compose.components.AttachToLifeCycle
 import com.alpenraum.shimstack.ui.base.compose.components.ButtonText

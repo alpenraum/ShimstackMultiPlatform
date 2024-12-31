@@ -5,7 +5,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.alpenraum.shimstack.model.measurementunit.MeasurementUnitType
+import com.alpenraum.shimstack.domain.model.PreferredTheme
+import com.alpenraum.shimstack.domain.model.measurementunit.MeasurementUnitType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.Single
@@ -15,16 +16,16 @@ class ShimstackDatastore(
     private val dataStore: DataStore<Preferences>
 ) {
     companion object {
-        private val PREF_USE_DYNAMIC_THEME = booleanPreferencesKey("PREF_USE_DYNAMIC_THEME")
+        private val PREF_PREFERRED_THEME = stringPreferencesKey("PREF_PREFERED_THEME")
         private val PREF_ALLOW_ANALYTICS = booleanPreferencesKey("PREF_ALLOW_ANALYTICS")
         private val PREF_IS_ONBOARDING_COMPLETED = booleanPreferencesKey("PREF_IS_ONBOARDING_COMPLETED")
         private val PREF_MEASUREMENT_UNITS_TYPE = stringPreferencesKey("PREF_MEASUREMENT_UNIT")
     }
 
-    val useDynamicTheme: Flow<Boolean> = PREF_USE_DYNAMIC_THEME.get(defaultValue = false)
+    val preferredTheme: Flow<String> = PREF_PREFERRED_THEME.get(defaultValue = PreferredTheme.default.name)
 
-    suspend fun setUseDynamicTheme(value: Boolean) {
-        dataStore.edit { it[PREF_USE_DYNAMIC_THEME] = value }
+    suspend fun setPreferredTheme(value: String) {
+        dataStore.edit { it[PREF_PREFERRED_THEME] = value }
     }
 
     val allowAnalytics: Flow<Boolean> = PREF_ALLOW_ANALYTICS.get(defaultValue = false)

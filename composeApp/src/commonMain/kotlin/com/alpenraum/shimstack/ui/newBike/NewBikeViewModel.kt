@@ -15,12 +15,12 @@ import com.alpenraum.shimstack.domain.model.bikesetup.DetailsInputData
 import com.alpenraum.shimstack.domain.model.bikesetup.SetupInputData
 import com.alpenraum.shimstack.domain.model.biketemplate.BikeTemplate
 import com.alpenraum.shimstack.domain.model.measurementunit.Distance
+import com.alpenraum.shimstack.domain.model.measurementunit.MeasurementUnitType
 import com.alpenraum.shimstack.domain.model.measurementunit.Pressure
 import com.alpenraum.shimstack.domain.model.suspension.Damping
 import com.alpenraum.shimstack.domain.model.suspension.Suspension
 import com.alpenraum.shimstack.domain.model.tire.Tire
 import com.alpenraum.shimstack.domain.userSettings.GetUserSettingsUseCase
-import com.alpenraum.shimstack.model.measurementunit.MeasurementUnitType
 import com.alpenraum.shimstack.ui.newBike.navigation.NewBikeNavigator
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

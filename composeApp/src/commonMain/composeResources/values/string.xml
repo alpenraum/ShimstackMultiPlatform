@@ -60,7 +60,7 @@
     <string name="label_save">Save</string>
 
     <string name="settings">Settings</string>
-    <string name="settings_dynamic_theme">Use Android colors</string>
+    <string name="settings_preferred_theme">Preferred theme</string>
     <string name="settings_allow_analytics">Allow collection of anonymous analytics</string>
     <string name="settings_measurement_unit_type">Preferred unit of measurement</string>
 
@@ -89,5 +89,9 @@
 
     <string name="copy_new_bike_success">And we\'re done! You can add another bike if you want to.</string>
     <string name="label_add_another_bike">Add another bike</string>
+
+    <string name="label_light_theme">Light</string>
+    <string name="label_dark_theme">Dark</string>
+    <string name="label_auto_theme">Auto</string>
 
 </resources>

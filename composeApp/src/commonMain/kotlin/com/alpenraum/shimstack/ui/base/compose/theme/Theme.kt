@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import com.alpenraum.shimstack.domain.model.PreferredTheme
 
 private val LightColors =
     lightColorScheme(
@@ -74,9 +75,11 @@ private val DarkColors =
 
 @Composable
 fun AppTheme(
-    useDarkTheme: Boolean = isSystemInDarkTheme(),
+    preferredTheme: PreferredTheme = PreferredTheme.AUTO,
     content: @Composable () -> Unit
 ) {
+    val useDarkTheme = (isSystemInDarkTheme() && preferredTheme == PreferredTheme.AUTO) || preferredTheme == PreferredTheme.DARK
+
     val colors =
         if (!useDarkTheme) {
             LightColors

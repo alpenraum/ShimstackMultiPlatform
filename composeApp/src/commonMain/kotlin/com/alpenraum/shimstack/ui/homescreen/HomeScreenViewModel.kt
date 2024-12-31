@@ -8,8 +8,8 @@ import com.alpenraum.shimstack.base.UnidirectionalViewModel
 import com.alpenraum.shimstack.data.bike.LocalBikeRepository
 import com.alpenraum.shimstack.domain.model.bike.Bike
 import com.alpenraum.shimstack.domain.model.cardsetup.CardSetup
+import com.alpenraum.shimstack.domain.model.measurementunit.MeasurementUnitType
 import com.alpenraum.shimstack.domain.userSettings.GetUserSettingsUseCase
-import com.alpenraum.shimstack.model.measurementunit.MeasurementUnitType
 import com.alpenraum.shimstack.ui.bottomnav.MainNavigator
 import com.alpenraum.shimstack.ui.newBike.navigation.NewBikeNavigator
 import kotlinx.collections.immutable.ImmutableList

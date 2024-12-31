@@ -19,12 +19,10 @@ class ShimstackLogger(
         ),
     val tag: String? = null
 ) : BaseLogger(config) {
-    fun generateTag() = tag ?: Exception().stackTraceToString()
-//            .first { it.cl !in fqcnIgnore }
-//            .let(::createStackElementTag)
+    private fun generateTag() = tag ?: Exception().stackTraceToString()
 
     @JvmOverloads
-    inline fun v(
+    fun v(
         throwable: Throwable? = null,
         tag: String = generateTag(),
         message: () -> String
@@ -33,7 +31,7 @@ class ShimstackLogger(
     }
 
     @JvmOverloads
-    inline fun d(
+    fun d(
         throwable: Throwable? = null,
         tag: String = generateTag(),
         message: () -> String
@@ -42,7 +40,7 @@ class ShimstackLogger(
     }
 
     @JvmOverloads
-    inline fun i(
+    fun i(
         throwable: Throwable? = null,
         tag: String = generateTag(),
         message: () -> String
@@ -51,7 +49,7 @@ class ShimstackLogger(
     }
 
     @JvmOverloads
-    inline fun w(
+    fun w(
         throwable: Throwable? = null,
         tag: String = generateTag(),
         message: () -> String
@@ -60,7 +58,7 @@ class ShimstackLogger(
     }
 
     @JvmOverloads
-    inline fun e(
+    fun e(
         throwable: Throwable? = null,
         tag: String = generateTag(),
         message: () -> String
@@ -69,7 +67,7 @@ class ShimstackLogger(
     }
 
     @JvmOverloads
-    inline fun a(
+    fun a(
         throwable: Throwable? = null,
         tag: String = generateTag(),
         message: () -> String
@@ -78,7 +76,7 @@ class ShimstackLogger(
     }
 
     @JvmOverloads
-    inline fun v(
+    fun v(
         messageString: String,
         throwable: Throwable? = null,
         tag: String = generateTag()
@@ -87,7 +85,7 @@ class ShimstackLogger(
     }
 
     @JvmOverloads
-    inline fun d(
+    fun d(
         messageString: String,
         throwable: Throwable? = null,
         tag: String = generateTag()
@@ -96,7 +94,7 @@ class ShimstackLogger(
     }
 
     @JvmOverloads
-    inline fun i(
+    fun i(
         messageString: String,
         throwable: Throwable? = null,
         tag: String = generateTag()
@@ -105,7 +103,7 @@ class ShimstackLogger(
     }
 
     @JvmOverloads
-    inline fun w(
+    fun w(
         messageString: String,
         throwable: Throwable? = null,
         tag: String = generateTag()
@@ -114,7 +112,7 @@ class ShimstackLogger(
     }
 
     @JvmOverloads
-    inline fun e(
+    fun e(
         messageString: String,
         throwable: Throwable? = null,
         tag: String = generateTag()
@@ -123,7 +121,7 @@ class ShimstackLogger(
     }
 
     @JvmOverloads
-    inline fun a(
+    fun a(
         messageString: String,
         throwable: Throwable? = null,
         tag: String = generateTag()
