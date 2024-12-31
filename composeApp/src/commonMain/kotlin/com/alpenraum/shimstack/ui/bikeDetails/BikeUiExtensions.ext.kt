@@ -2,11 +2,11 @@ package com.alpenraum.shimstack.ui.bikeDetails
 
 import androidx.compose.runtime.Composable
 import com.alpenraum.shimstack.domain.model.bike.Bike
+import com.alpenraum.shimstack.domain.model.measurementunit.MeasurementUnitType
 import com.alpenraum.shimstack.domain.model.measurementunit.Pressure
 import com.alpenraum.shimstack.domain.model.suspension.Damping
 import com.alpenraum.shimstack.domain.model.suspension.Suspension
 import com.alpenraum.shimstack.domain.model.tire.Tire
-import com.alpenraum.shimstack.model.measurementunit.MeasurementUnitType
 import com.alpenraum.shimstack.ui.homescreen.UIDataLabel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList

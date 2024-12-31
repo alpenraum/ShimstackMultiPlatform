@@ -1,4 +1,4 @@
-package com.alpenraum.shimstack.model.measurementunit
+package com.alpenraum.shimstack.domain.model.measurementunit
 
 enum class MeasurementUnitType {
     METRIC,

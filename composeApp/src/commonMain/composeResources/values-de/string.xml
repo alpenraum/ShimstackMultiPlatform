@@ -51,7 +51,7 @@
     <string name="label_save">Speichern</string>
 
     <string name="settings">Einstellungen</string>
-    <string name="settings_dynamic_theme">Android Farben verwenden</string>
+    <string name="settings_preferred_theme">Bevorzugtes Thema</string>
     <string name="settings_allow_analytics">Sammlung von anonymen Daten erlauben</string>
     <string name="settings_measurement_unit_type">Bevorzugte Maßeinheit</string>
 
@@ -78,4 +78,8 @@
     <string name="copy_new_bike_success">Fertig! Du kannst noch weitere Fahrräder hinzufügen.</string>
 
     <string name="label_add_another_bike">Weiteres Fahrrad hinzufügen</string>
+
+    <string name="label_light_theme">Hell</string>
+    <string name="label_dark_theme">Dunkel</string>
+    <string name="label_auto_theme">Auto</string>
 </resources>

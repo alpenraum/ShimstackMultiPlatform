@@ -1,14 +1,13 @@
 package com.alpenraum.shimstack.ui.bottomnav
 
-import androidx.compose.material3.Text
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
-import androidx.navigation.toRoute
 import com.alpenraum.shimstack.ui.base.navigation.NavDestinationDefinition
 import com.alpenraum.shimstack.ui.base.navigation.NavGraphDefinition
+import com.alpenraum.shimstack.ui.bikeDetails.BikeDetailsScreen
 import kotlinx.serialization.Serializable
 import org.koin.core.annotation.Single
 
@@ -40,8 +39,7 @@ class MainNavigationGraph : NavGraphDefinition<MainRoute> {
             }
 
             composable<MainRoute.BikeDetails> {
-                val id = it.toRoute<MainRoute.BikeDetails>().id
-                Text("Bike details: $id")
+                BikeDetailsScreen(navController)
             }
         }
     }

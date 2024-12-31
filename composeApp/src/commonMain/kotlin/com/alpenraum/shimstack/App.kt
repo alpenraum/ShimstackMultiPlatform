@@ -4,32 +4,35 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.alpenraum.shimstack.base.di.ShimstackGeneratedModule
-import com.alpenraum.shimstack.base.di.databaseModule
-import com.alpenraum.shimstack.base.di.navigationModule
-import com.alpenraum.shimstack.base.di.platformModule
 import com.alpenraum.shimstack.data.datastore.ShimstackDatastore
 import com.alpenraum.shimstack.domain.InitializeAppUseCase
+import com.alpenraum.shimstack.domain.model.PreferredTheme
+import com.alpenraum.shimstack.domain.userSettings.GetUserSettingsUseCase
 import com.alpenraum.shimstack.ui.base.compose.theme.AppTheme
 import com.alpenraum.shimstack.ui.base.navigation.ShimstackNavHost
-import org.koin.compose.KoinApplication
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.compose.koinInject
-import org.koin.ksp.generated.module
 
 @Composable
 fun App() {
-    KoinApplication(application = {
-        modules(navigationModule(), ShimstackGeneratedModule().module, databaseModule(), platformModule())
-    }) {
-        initializeApp()
+    initializeApp()
 
-        AppTheme {
-            Surface(Modifier.fillMaxSize()) {
-                val navController = rememberNavController()
-                ShimstackNavHost(navController, modifier = Modifier)
-            }
+    val preferredTheme = remember { mutableStateOf(PreferredTheme.default) }
+    val userSettingsUseCase = koinInject<GetUserSettingsUseCase>()
+    LaunchedEffect(Unit) {
+        userSettingsUseCase().collectLatest {
+            preferredTheme.value = it.preferredTheme
+        }
+    }
+
+    AppTheme(preferredTheme = preferredTheme.value) {
+        Surface(Modifier.fillMaxSize()) {
+            val navController = rememberNavController()
+            ShimstackNavHost(navController, modifier = Modifier)
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.alpenraum.shimstack.domain.userSettings.mappers
 
 import com.alpenraum.shimstack.domain.model.measurementunit.Distance
+import com.alpenraum.shimstack.domain.model.measurementunit.MeasurementUnitType
 import com.alpenraum.shimstack.domain.userSettings.UserSettingsRepository
-import com.alpenraum.shimstack.model.measurementunit.MeasurementUnitType
 import kotlinx.coroutines.flow.first
 import org.koin.core.annotation.Single
 

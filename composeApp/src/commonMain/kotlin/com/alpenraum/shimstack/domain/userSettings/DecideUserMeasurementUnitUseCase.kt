@@ -1,7 +1,7 @@
 package com.alpenraum.shimstack.domain.userSettings
 
 import androidx.compose.ui.text.intl.Locale
-import com.alpenraum.shimstack.model.measurementunit.MeasurementUnitType
+import com.alpenraum.shimstack.domain.model.measurementunit.MeasurementUnitType
 import org.koin.core.annotation.Single
 
 @Single
