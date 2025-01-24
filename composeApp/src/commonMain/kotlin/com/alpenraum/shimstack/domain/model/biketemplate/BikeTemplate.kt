@@ -46,6 +46,7 @@ data class BikeTemplate(
                 } else {
                     Suspension(
                         Pressure(0.0),
+                        0.0,
                         Damping(0, 0),
                         Damping(0, 0),
                         0,
@@ -58,6 +59,7 @@ data class BikeTemplate(
                 } else {
                     Suspension(
                         Pressure(0.0),
+                        0.0,
                         Damping(0, 0),
                         Damping(0, 0),
                         0,

@@ -10,6 +10,7 @@ import com.alpenraum.shimstack.ui.base.compose.fadeIn
 import com.alpenraum.shimstack.ui.base.compose.fadeOut
 import com.alpenraum.shimstack.ui.homescreen.HomeScreenFeature
 import com.alpenraum.shimstack.ui.settingsscreen.SettingsScreen
+import com.alpenraum.shimstack.ui.setupTroubleshooting.SetupWizardScreen
 
 @Composable
 fun BottomNavigationGraph(
@@ -39,6 +40,9 @@ fun BottomNavigationGraph(
         }
         composable(BottomNavigationItem.Settings.route) {
             SettingsScreen(navController = featureNavController)
+        }
+        composable(BottomNavigationItem.SetupTroubleshoot.route) {
+            SetupWizardScreen(navController = featureNavController)
         }
     }
 }

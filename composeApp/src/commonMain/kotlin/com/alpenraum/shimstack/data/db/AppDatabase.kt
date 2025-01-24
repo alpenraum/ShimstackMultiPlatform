@@ -8,10 +8,11 @@ import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.alpenraum.shimstack.base.DispatchersProvider
 import com.alpenraum.shimstack.data.model.bike.BikeDTO
 import com.alpenraum.shimstack.data.model.bike.BikeTemplateDTO
+import com.alpenraum.shimstack.data.model.setupRecommendation.SetupRecommendationDTO
 
 @Database(
-    entities = [BikeDTO::class, BikeTemplateDTO::class],
-    version = 1,
+    entities = [BikeDTO::class, BikeTemplateDTO::class, SetupRecommendationDTO::class],
+    version = 2,
     exportSchema = true
 )
 @ConstructedBy(AppDatabaseConstructor::class)
@@ -20,9 +21,12 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun bikeTemplateDao(): BikeTemplateDAO
 
+    abstract fun setupRecommendationsDao(): SetupRecommendationDAO
+
     companion object {
         const val TABLE_BIKE = "user_bikes"
         const val TABLE_BIKE_TEMPLATE = "template_bikes"
+        const val TABLE_SETUP_RECOMMENDATION = "setup_recommendation"
     }
 }
 

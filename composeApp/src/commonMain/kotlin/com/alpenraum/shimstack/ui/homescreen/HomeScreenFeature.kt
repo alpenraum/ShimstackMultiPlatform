@@ -7,33 +7,24 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,49 +33,35 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.semantics.invisibleToUser
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.util.lerp
 import androidx.navigation.NavController
 import com.alpenraum.shimstack.base.use
 import com.alpenraum.shimstack.domain.model.bike.Bike
 import com.alpenraum.shimstack.domain.model.cardsetup.CardSetup
 import com.alpenraum.shimstack.domain.model.cardsetup.CardType
 import com.alpenraum.shimstack.ui.base.compose.components.AttachToLifeCycle
+import com.alpenraum.shimstack.ui.base.compose.components.BikePager
 import com.alpenraum.shimstack.ui.base.compose.components.CARD_MARGIN
-import com.alpenraum.shimstack.ui.base.compose.components.ShimstackPagerIndicator
-import com.alpenraum.shimstack.ui.base.compose.components.getScreenWidth
-import com.alpenraum.shimstack.ui.base.compose.components.shimstackRoundedCornerShape
 import com.alpenraum.shimstack.ui.base.compose.theme.AppTheme
-import com.eygraber.compose.placeholder.PlaceholderHighlight
-import com.eygraber.compose.placeholder.material3.fade
-import com.eygraber.compose.placeholder.placeholder
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import shimstackmultiplatform.composeapp.generated.resources.Res
 import shimstackmultiplatform.composeapp.generated.resources.copy_add_new_bike
-import shimstackmultiplatform.composeapp.generated.resources.fab_add_bike
 import shimstackmultiplatform.composeapp.generated.resources.il_empty_mountain
-import kotlin.math.absoluteValue
-import kotlin.math.max
 
 @Composable
 fun HomeScreenFeature(
@@ -123,7 +100,6 @@ private fun HomeScreenContent(
                 HomeScreenContract.Event.Error -> scope.launch { snackState.showSnackbar("ERROR") }
                 HomeScreenContract.Event.FinishedLoading -> isLoading.value = false
                 HomeScreenContract.Event.Loading -> isLoading.value = true
-                HomeScreenContract.Event.NewPageSelected -> {}
             }
         }
     }
@@ -137,9 +113,15 @@ private fun HomeScreenContent(
                 Modifier
                     .padding(top = 32.dp, bottom = 16.dp),
             showPlaceholder = isLoading.value,
-            state = state,
-            intents = intents,
-            pagerState = pagerState
+            bikes = state.bikes,
+            pagerState = pagerState,
+            onAddNewBikeClick = { intents(HomeScreenContract.Intent.OnAddNewBike) },
+            onDetailsClick = {
+                intents(
+                    HomeScreenContract.Intent.OnBikeDetailsClicked(it)
+                )
+            },
+            onSelectedBikeChanged = {}
         )
 
         AnimatedContent(
@@ -250,177 +232,10 @@ private fun BikeDetails(
 }
 
 @Composable
-private fun BikePager(
-    modifier: Modifier = Modifier,
-    state: HomeScreenContract.State,
-    intents: (HomeScreenContract.Intent) -> Unit,
-    showPlaceholder: Boolean,
-    pagerState: PagerState
-) {
-    val itemSize = 200.dp
-
-    LaunchedEffect(pagerState) {
-        snapshotFlow { pagerState.currentPage }.distinctUntilChanged().collect {
-            intents(HomeScreenContract.Intent.OnViewPagerSelectionChanged)
-        }
-    }
-    Column(modifier = modifier) {
-        HorizontalPager(
-            pagerState,
-            modifier = Modifier,
-            contentPadding =
-                PaddingValues(
-                    horizontal = calculatePagerItemPadding(itemWidth = itemSize)
-                ),
-            verticalAlignment = Alignment.Top,
-            userScrollEnabled = !showPlaceholder
-        ) { page ->
-            val bike = state.bikes.getOrNull(page)
-
-            val content: @Composable (modifier: Modifier) -> Unit =
-                if (page == state.bikes.size) {
-                    { AddNewBikeCardContent(intents = intents) }
-                } else {
-                    { BikeCardContent(bike = bike, it) }
-                }
-
-            BikeCard(
-                modifier =
-                    Modifier
-                        .size(itemSize)
-                        .graphicsLayer {
-                            val pageOffset =
-                                ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction)
-                                    .absoluteValue
-                            lerp(
-                                start = 0.8f,
-                                stop = 1f,
-                                fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                            ).also { scale ->
-                                this.scaleX = scale
-                                this.scaleY = scale
-                            }
-                        }.clickable {
-                            bike?.let {
-                                intents(
-                                    HomeScreenContract.Intent.OnBikeDetailsClicked(it)
-                                )
-                            }
-                        },
-                showPlaceholder = showPlaceholder,
-                content = content
-            )
-        }
-        ShimstackPagerIndicator(
-            selectedStep = pagerState.currentPage,
-            steps = pagerState.pageCount,
-            modifier =
-                Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(16.dp)
-        )
-    }
-}
-
-@OptIn(ExperimentalComposeUiApi::class)
-@Composable
-private fun calculatePagerItemPadding(itemWidth: Dp) =
-    max(
-        ((getScreenWidth().value - itemWidth.value) / 2.0f),
-        0.0f
-    ).dp
-
-@Composable
-fun BikeCard(
-    modifier: Modifier = Modifier,
-    showPlaceholder: Boolean,
-    content: @Composable (modifier: Modifier) -> Unit
-) {
-    Surface(
-        modifier =
-            modifier
-                .placeholder(
-                    visible = showPlaceholder,
-                    highlight = PlaceholderHighlight.fade(),
-                    color = MaterialTheme.colorScheme.secondaryContainer,
-                    shape = shimstackRoundedCornerShape()
-                ),
-        shape = shimstackRoundedCornerShape(),
-        tonalElevation = 10.dp,
-        color = MaterialTheme.colorScheme.secondaryContainer
-    ) {
-        content(Modifier.padding(8.dp))
-    }
-}
-
-@Composable
-fun BikeCardContent(
-    bike: Bike?,
-    modifier: Modifier = Modifier
-) {
-    // TODO
-    Text(
-        bike?.name ?: "",
-        style = MaterialTheme.typography.bodyMedium,
-        modifier = modifier
-    )
-}
-
-@OptIn(ExperimentalComposeUiApi::class)
-@Composable
-private fun AddNewBikeCardContent(
-    modifier: Modifier = Modifier,
-    intents: (HomeScreenContract.Intent) -> Unit
-) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier =
-            modifier
-                .fillMaxSize()
-                .clickable {
-                    intents(HomeScreenContract.Intent.OnAddNewBike)
-                }.semantics(mergeDescendants = true) {}
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Icon(
-                Icons.Rounded.Add,
-                contentDescription = "",
-                modifier =
-                    Modifier
-                        .size(100.dp)
-                        .semantics { invisibleToUser() },
-                tint = MaterialTheme.colorScheme.surfaceTint.copy(alpha = 0.8f)
-            )
-            Text(
-                text = stringResource(Res.string.fab_add_bike),
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview() {
+fun Preview() {
     AppTheme {
         HomeScreenContent(
             state = HomeScreenContract.State(persistentListOf(), persistentListOf()),
-            event = MutableSharedFlow(),
-            intents = {}
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun PreviewData() {
-    AppTheme {
-        HomeScreenContent(
-            state =
-                HomeScreenContract.State(
-                    persistentListOf(Bike.empty()),
-                    CardSetup.defaultConfig()
-                ),
             event = MutableSharedFlow(),
             intents = {}
         )

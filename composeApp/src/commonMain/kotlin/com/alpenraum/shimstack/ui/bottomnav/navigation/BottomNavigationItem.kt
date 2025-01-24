@@ -6,6 +6,7 @@ import shimstackmultiplatform.composeapp.generated.resources.Res
 import shimstackmultiplatform.composeapp.generated.resources.home_24px
 import shimstackmultiplatform.composeapp.generated.resources.settings
 import shimstackmultiplatform.composeapp.generated.resources.title_home
+import shimstackmultiplatform.composeapp.generated.resources.title_setup_troubleshoot
 
 sealed class BottomNavigationItem(
     val route: String,
@@ -15,6 +16,12 @@ sealed class BottomNavigationItem(
     data object Home : BottomNavigationItem(
         "home",
         Res.string.title_home,
+        Res.drawable.home_24px
+    )
+
+    data object SetupTroubleshoot : BottomNavigationItem(
+        "setupTroubleshoot",
+        Res.string.title_setup_troubleshoot,
         Res.drawable.home_24px
     )
 

@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "571fa391c17790697cf3af0aceb3f00c",
+    "version": 2,
+    "identityHash": "0ac53ec6e2ebcd4e07d761d26f25cb35",
     "entities": [
       {
         "tableName": "user_bikes",
@@ -223,11 +223,145 @@
             "id"
           ]
         }
+      },
+      {
+        "tableName": "setup_recommendation",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `bikeId` INTEGER NOT NULL, `wizardSession` TEXT NOT NULL, `creation_epoch_seconds` INTEGER NOT NULL, `frontTirePressureDelta` REAL, `rearTirePressureDelta` REAL, `frontSagDelta` REAL, `rearSagDelta` REAL, `frontHSCDelta` REAL, `rearHSCDelta` REAL, `frontLSCDelta` REAL, `rearLSCDelta` REAL, `frontHSRDelta` REAL, `rearHSRDelta` REAL, `frontLSRDelta` REAL, `rearLSRDelta` REAL, `frontTokenDelta` REAL, `rearTokenDelta` REAL, `isAccepted` INTEGER, FOREIGN KEY(`bikeId`) REFERENCES `user_bikes`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "bikeId",
+            "columnName": "bikeId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wizardSession",
+            "columnName": "wizardSession",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "creation_epoch_seconds",
+            "columnName": "creation_epoch_seconds",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "frontTirePressureDelta",
+            "columnName": "frontTirePressureDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "rearTirePressureDelta",
+            "columnName": "rearTirePressureDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "frontSagDelta",
+            "columnName": "frontSagDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "rearSagDelta",
+            "columnName": "rearSagDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "frontHSCDelta",
+            "columnName": "frontHSCDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "rearHSCDelta",
+            "columnName": "rearHSCDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "frontLSCDelta",
+            "columnName": "frontLSCDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "rearLSCDelta",
+            "columnName": "rearLSCDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "frontHSRDelta",
+            "columnName": "frontHSRDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "rearHSRDelta",
+            "columnName": "rearHSRDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "frontLSRDelta",
+            "columnName": "frontLSRDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "rearLSRDelta",
+            "columnName": "rearLSRDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "frontTokenDelta",
+            "columnName": "frontTokenDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "rearTokenDelta",
+            "columnName": "rearTokenDelta",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "isAccepted",
+            "columnName": "isAccepted",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_setup_recommendation_bikeId",
+            "unique": false,
+            "columnNames": [
+              "bikeId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_setup_recommendation_bikeId` ON `${TABLE_NAME}` (`bikeId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "user_bikes",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "bikeId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '571fa391c17790697cf3af0aceb3f00c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0ac53ec6e2ebcd4e07d761d26f25cb35')"
     ]
   }
 }

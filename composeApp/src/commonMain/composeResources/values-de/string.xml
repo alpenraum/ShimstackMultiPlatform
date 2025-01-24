@@ -31,16 +31,19 @@
     <string name="shock">Dämpfer</string>
 
     <string name="pressure">Druck</string>
+    <string name="sag">Sag</string>
     <string name="comp">Comp</string>
     <string name="rebound">Rebound</string>
     <string name="tokens">Tokens</string>
     <string name="metric">Metrisch</string>
     <string name="imperial">Imperial</string>
+    <string name="clicks">Klicks</string>
 
     <string name="fab_add_bike">Neues Fahrrad hinzufügen</string>
     <string name="copy_add_new_bike">Füge dein erstes Fahrrrad hinzu!</string>
 
     <string name="title_home">Home</string>
+    <string name="title_setup_troubleshoot">Setup Wizard</string>
     <string name="label_continue">Weiter</string>
     <string name="label_next_step">Nächster Schritt</string>
     <string name="label_yes">Ja</string>
@@ -82,4 +85,14 @@
     <string name="label_light_theme">Hell</string>
     <string name="label_dark_theme">Dunkel</string>
     <string name="label_auto_theme">Auto</string>
+
+    <string name="setup_wizard_primary_cta">Ich brauche Hilfe</string>
+    <string name="setup_wizard_button_see_history">Vorherige Empfehlungen</string>
+
+    <string name="setup_wizard_label_recommendation_header">Versuch das:</string>
+    <string name="setup_wizard_label_recommendation_decrease">Reduziere %1$s %2$s um</string>
+    <string name="setup_wizard_label_recommendation_increase">Erhöhe %1$s %2$s um</string>
+    <string name="setup_wizard_label_recommendation_cta">Hat das dein Gefühl verbessert?</string>
+
+    <string name="setup_wizard_button_select_symptom">Das ist mein Symptom</string>
 </resources>

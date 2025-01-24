@@ -31,6 +31,7 @@
     <string name="shock">Shock</string>
 
     <string name="pressure">Pressure</string>
+    <string name="sag">Sag</string>
     <string name="comp">Comp</string>
     <string name="rebound">Rebound</string>
     <string name="tokens">Tokens</string>
@@ -45,11 +46,14 @@
     <string name="psi" translatable="false">PSI</string>
     <string name="mm" translatable="false">mm</string>
     <string name="inch" translatable="false">"</string>
+    <string name="clicks">Clicks</string>
+    <string name="percent">%</string>
 
     <string name="fab_add_bike">Add new bike</string>
     <string name="copy_add_new_bike">Add your first bike!</string>
 
     <string name="title_home">Home</string>
+    <string name="title_setup_troubleshoot">Setup wizard</string>
     <string name="label_continue">Continue</string>
     <string name="label_next_step">Next Step</string>
     <string name="label_yes">Yes</string>
@@ -73,7 +77,7 @@
     <string name="copy_new_bike_entry">Search for your bike by make and model. Don\'t worry if it isn\'t in the list, you will just have to enter some things manually.</string>
     <string name="placeholder_new_bike_entry" translatable="false">Santa Cruz Session</string>
     <string name="label_new_bike_search">Search bike</string>
-    <string name="label_new_bike_travel" translatable="false">%1smm / %2smm</string>
+    <string name="label_new_bike_travel" translatable="false">%1$smm / %2$smm</string>
 
     <string name="copy_new_bike_details">Enter or modify the data of your bike.</string>
     <string name="copy_new_bike_internal_width_inf">Leave it empty if you are unsure.</string>
@@ -93,5 +97,17 @@
     <string name="label_light_theme">Light</string>
     <string name="label_dark_theme">Dark</string>
     <string name="label_auto_theme">Auto</string>
+
+    <string name="setup_wizard_primary_cta">I need help</string>
+    <string name="setup_wizard_button_see_history">Previous Recommendations</string>
+
+    <string name="setup_wizard_label_recommendation_header">Try this out:</string>
+    <string name="setup_wizard_label_recommendation_decrease">Decrease %1$s %2$s by</string>
+    <string name="setup_wizard_label_recommendation_increase">Increase %1$s %2$s by</string>
+    <string name="setup_wizard_label_recommendation_cta">Did this improve your feel?</string>
+
+    <string name="setup_wizard_button_select_symptom">This is my symptom</string>
+
+
 
 </resources>

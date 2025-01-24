@@ -51,6 +51,7 @@ import shimstackmultiplatform.composeapp.generated.resources.label_tire_pressure
 import shimstackmultiplatform.composeapp.generated.resources.pressure
 import shimstackmultiplatform.composeapp.generated.resources.rear
 import shimstackmultiplatform.composeapp.generated.resources.rebound
+import shimstackmultiplatform.composeapp.generated.resources.sag
 import shimstackmultiplatform.composeapp.generated.resources.tokens
 
 @Composable
@@ -127,6 +128,7 @@ fun EnterSetupScreen(
             SuspensionInput(
                 title = stringResource(Res.string.label_front_suspension),
                 pressureInput = state.setupInput.frontSuspensionPressure ?: "",
+                sagInput = state.setupInput.frontSag ?: "",
                 tokensInput = state.setupInput.frontSuspensionTokens ?: "",
                 lscInput = state.setupInput.frontSuspensionLSC ?: "",
                 hscInput = state.setupInput.frontSuspensionHSC ?: "",
@@ -135,6 +137,7 @@ fun EnterSetupScreen(
                 showHSC = state.hasHSCFork,
                 showHSR = state.hasHSRFork,
                 onPressureChanged = { intent(NewBikeContract.Intent.FrontSuspensionPressure(it)) },
+                onSagChanged = { intent(NewBikeContract.Intent.FrontSuspensionSag(it)) },
                 onTokensChanged = { intent(NewBikeContract.Intent.FrontSuspensionTokens(it)) },
                 onLSCChanged = { intent(NewBikeContract.Intent.FrontSuspensionLSC(it)) },
                 onHSCChanged = { intent(NewBikeContract.Intent.FrontSuspensionHSC(it)) },
@@ -147,6 +150,7 @@ fun EnterSetupScreen(
             SuspensionInput(
                 title = stringResource(Res.string.label_rear_suspension),
                 pressureInput = state.setupInput.rearSuspensionPressure ?: "",
+                sagInput = state.setupInput.rearSag ?: "",
                 tokensInput = state.setupInput.rearSuspensionTokens ?: "",
                 lscInput = state.setupInput.rearSuspensionLSC ?: "",
                 hscInput = state.setupInput.rearSuspensionHSC ?: "",
@@ -155,6 +159,7 @@ fun EnterSetupScreen(
                 showHSC = state.hasHSCShock,
                 showHSR = state.hasHSRShock,
                 onPressureChanged = { intent(NewBikeContract.Intent.RearSuspensionPressure(it)) },
+                onSagChanged = { intent(NewBikeContract.Intent.RearSuspensionSag(it)) },
                 onTokensChanged = { intent(NewBikeContract.Intent.RearSuspensionTokens(it)) },
                 onLSCChanged = { intent(NewBikeContract.Intent.RearSuspensionLSC(it)) },
                 onHSCChanged = { intent(NewBikeContract.Intent.RearSuspensionHSC(it)) },
@@ -182,6 +187,7 @@ fun EnterSetupScreen(
 private fun ColumnScope.SuspensionInput(
     title: String,
     pressureInput: String,
+    sagInput: String,
     tokensInput: String,
     lscInput: String,
     hscInput: String?,
@@ -190,6 +196,7 @@ private fun ColumnScope.SuspensionInput(
     showHSC: Boolean,
     showHSR: Boolean,
     onPressureChanged: (String) -> Unit,
+    onSagChanged: (String) -> Unit,
     onTokensChanged: (String) -> Unit,
     onLSCChanged: (String) -> Unit,
     onHSCChanged: (String) -> Unit,
@@ -214,6 +221,13 @@ private fun ColumnScope.SuspensionInput(
             value = tokensInput,
             onValueChange = onTokensChanged,
             label = stringResource(Res.string.tokens),
+            keyboardOptions = KeyboardOptions.number(ImeAction.Next),
+            modifier = Modifier.weight(1.0f)
+        )
+        TextInput(
+            value = sagInput,
+            onValueChange = onSagChanged,
+            label = stringResource(Res.string.sag),
             keyboardOptions = KeyboardOptions.number(ImeAction.Next),
             modifier = Modifier.weight(1.0f)
         )

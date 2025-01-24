@@ -70,9 +70,6 @@ class HomeScreenViewModel(
     ) {
         when (intent) {
             HomeScreenContract.Intent.OnRefresh -> {}
-            is HomeScreenContract.Intent.OnViewPagerSelectionChanged -> {
-                onViewPagerSelectionChanged()
-            }
 
             HomeScreenContract.Intent.OnAddNewBike -> {
                 viewModelScope.launch {
@@ -105,9 +102,6 @@ class HomeScreenViewModel(
 
     private fun fetchBikes() = bikeRepository.getAllBikes()
 
-    private fun onViewPagerSelectionChanged() {
-        viewModelScope.launch { eventFlow.emit(HomeScreenContract.Event.NewPageSelected) }
-    }
 
     private fun createState(
         state: Triple<ImmutableList<Bike>, ImmutableList<CardSetup>, MeasurementUnitType>
@@ -137,13 +131,11 @@ interface HomeScreenContract :
 
         data object Error : Event()
 
-        data object NewPageSelected : Event()
     }
 
     sealed class Intent {
         data object OnRefresh : Intent()
 
-        data object OnViewPagerSelectionChanged : Intent()
 
         data object OnAddNewBike : Intent()
 

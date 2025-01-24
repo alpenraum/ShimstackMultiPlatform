@@ -232,6 +232,22 @@ class NewBikeViewModel(
                             )
                     )
 
+                is NewBikeContract.Intent.FrontSuspensionSag ->
+                    validateAndUpdateInput(
+                        setupInputData =
+                            SetupInputData(
+                                frontSag = intent.sag
+                            )
+                    )
+
+                is NewBikeContract.Intent.RearSuspensionSag ->
+                    validateAndUpdateInput(
+                        setupInputData =
+                            SetupInputData(
+                                frontSag = intent.sag
+                            )
+                    )
+
                 is NewBikeContract.Intent.RearSuspensionTokens ->
                     validateAndUpdateInput(
                         setupInputData = SetupInputData(rearSuspensionTokens = intent.tokens)
@@ -433,6 +449,7 @@ interface NewBikeContract : UnidirectionalViewModel<NewBikeContract.State, NewBi
                         with(
                             setupInput.frontSuspensionPressure?.toDouble() ?: 0.0
                         ) { if (measurementUnitType.isMetric()) Pressure(this) else Pressure.fromImperial(this) },
+                        sag = setupInput.frontSag?.toDouble() ?: 0.0,
                         Damping(
                             setupInput.frontSuspensionLSC?.toInt() ?: 0,
                             if (hasHSCFork) setupInput.frontSuspensionHSC?.toInt() ?: 0 else null
@@ -455,6 +472,7 @@ interface NewBikeContract : UnidirectionalViewModel<NewBikeContract.State, NewBi
                         with(
                             setupInput.rearSuspensionPressure?.toDouble() ?: 0.0
                         ) { if (measurementUnitType.isMetric()) Pressure(this) else Pressure.fromImperial(this) },
+                        sag = setupInput.rearSag?.toDouble() ?: 0.0,
                         Damping(
                             setupInput.rearSuspensionLSC?.toInt() ?: 0,
                             if (hasHSCShock) setupInput.rearSuspensionHSC?.toInt() ?: 0 else null
@@ -589,6 +607,14 @@ interface NewBikeContract : UnidirectionalViewModel<NewBikeContract.State, NewBi
 
         class FrontSuspensionPressure(
             val pressure: String?
+        ) : SetupInput()
+
+        class FrontSuspensionSag(
+            val sag: String?
+        ) : SetupInput()
+
+        class RearSuspensionSag(
+            val sag: String?
         ) : SetupInput()
 
         class FrontSuspensionTokens(

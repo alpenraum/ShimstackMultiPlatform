@@ -97,11 +97,15 @@ private fun Bike.getDampingUIData(
     )
 }
 
-@Composable
-fun MeasurementUnitType.getPressureLabel(): String = stringResource(if (this.isMetric()) Res.string.bar else Res.string.psi)
+fun MeasurementUnitType.getPressureStringRes() =if (this.isMetric()) Res.string.bar else Res.string.psi
 
 @Composable
-fun MeasurementUnitType.getDistanceLabel(): String = stringResource(if (this.isMetric()) Res.string.mm else Res.string.inch)
+fun MeasurementUnitType.getPressureLabel(): String = stringResource(getPressureStringRes())
+
+fun MeasurementUnitType.getDistanceStringRes() = if (this.isMetric()) Res.string.mm else Res.string.inch
+
+@Composable
+fun MeasurementUnitType.getDistanceLabel(): String = stringResource(getDistanceStringRes())
 
 // region Tire
 @Composable

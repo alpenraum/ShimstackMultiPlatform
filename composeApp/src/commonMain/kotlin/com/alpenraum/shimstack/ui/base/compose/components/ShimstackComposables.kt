@@ -2,10 +2,13 @@ package com.alpenraum.shimstack.ui.base.compose.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -14,6 +17,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -94,17 +99,24 @@ fun CardWithPlaceholder(
 @Composable
 fun ShimstackCard(
     modifier: Modifier = Modifier,
+    shape: Shape = shimstackRoundedCornerShape(),
     content:
         @Composable ColumnScope.() -> Unit
 ) {
     Card(
         modifier =
         modifier,
-//        colors = CardDefaults.cardColors(
-//            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-//            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-//        ),
-        content = content
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+            ),
+        content = {
+            Column(modifier = Modifier.padding(PaddingValues(12.dp))) {
+                content()
+            }
+        },
+        shape = shape
     )
 }
 
@@ -243,6 +255,9 @@ fun ButtonText(
     style = style,
     fontWeight = weight
 )
+
+@Composable
+fun LoadingSpinner() = CircularProgressIndicator()
 
 @Composable
 expect fun getScreenWidth(): Dp

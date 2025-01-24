@@ -292,6 +292,7 @@ private val testBike =
         frontSuspension =
             Suspension(
                 Pressure(60.0),
+                0.3,
                 Damping(1),
                 Damping(1),
                 3,
@@ -314,6 +315,7 @@ private val testBikeMax =
         frontSuspension =
             Suspension(
                 Pressure(60.0),
+                0.3,
                 Damping(1, 2),
                 Damping(3, 4),
                 5,
