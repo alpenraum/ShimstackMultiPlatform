@@ -3,6 +3,7 @@ package com.alpenraum.shimstack.ui.setupTroubleshooting
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -52,6 +54,7 @@ import com.alpenraum.shimstack.ui.base.compose.components.LargeButton
 import com.alpenraum.shimstack.ui.base.compose.components.LargeSecondaryButton
 import com.alpenraum.shimstack.ui.base.compose.components.LoadingSpinner
 import com.alpenraum.shimstack.ui.base.compose.components.ShimstackCard
+import com.alpenraum.shimstack.ui.base.compose.components.getScreenHeight
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.painterResource
@@ -97,11 +100,12 @@ fun SetupWizardScreen(
     }
     Scaffold(snackbarHost = { SnackbarHost(snackState) }, modifier = modifier) { paddingValues ->
         Content(state, Modifier.padding(paddingValues), intents)
-        ModalBottomSheet(
-            sheetState = bottomSheetState,
-            onDismissRequest = { intents(SetupWizardContract.Intent.OnBottomSheetDismissed) }
-        ) {
-            (state as? SetupWizardContract.State.SelectSymptom)?.let {
+
+        (state as? SetupWizardContract.State.SelectSymptom)?.let {
+            ModalBottomSheet(
+                sheetState = bottomSheetState,
+                onDismissRequest = { intents(SetupWizardContract.Intent.OnBottomSheetDismissed) }
+            ) {
                 SetupSymptomList(it.symptoms, Modifier, intents)
             }
         }
@@ -131,20 +135,36 @@ fun Content(
             onSelectedBikeChanged = { intents(SetupWizardContract.Intent.OnSelectedBikeChanged(it)) }
         )
 
-        ShimstackCard(Modifier.weight(1.0f).fillMaxWidth().padding(top = 32.dp)) {
-            ClassKeyedCrossfade(state) {
-                when (it) {
-                    is SetupWizardContract.State.Recommendation -> SetupRecommendationContent(it.setupRecommendation, intents)
-                    is SetupWizardContract.State.Start -> StartContent(intents)
-                    is SetupWizardContract.State.Success -> Text("Success")
-                    is SetupWizardContract.State.SelectSymptom ->
-                        Column(
-                            Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            LoadingSpinner()
-                        }
+        ShimstackCard(
+            Modifier
+                .weight(1.0f)
+                .fillMaxWidth()
+                .padding(16.dp)
+                .padding(top = 16.dp)
+        ) {
+            if (state.bikes.isEmpty()) {
+                Box(Modifier.fillMaxSize()) {
+                    Text(
+                        "You need to first create a bike before you can use the Setup Wizard. You can do this on the homescreen!",
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+            } else {
+                ClassKeyedCrossfade(state) {
+                    when (it) {
+                        is SetupWizardContract.State.Recommendation -> SetupRecommendationContent(it.setupRecommendation, intents)
+                        is SetupWizardContract.State.Start -> StartContent(intents)
+                        is SetupWizardContract.State.Success -> Text("Success")
+                        is SetupWizardContract.State.SelectSymptom ->
+                            Column(
+                                Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                LoadingSpinner()
+                            }
+                    }
                 }
             }
         }
@@ -286,7 +306,7 @@ fun SetupSymptomList(
     intents: (SetupWizardContract.Intent) -> Unit
 ) {
     Column(modifier.padding(16.dp)) {
-        LazyColumn(Modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        LazyColumn(Modifier.heightIn(max = getScreenHeight() * 0.6f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             items(symptomViews) {
                 SetupSymptomItem(
                     it,
@@ -296,7 +316,7 @@ fun SetupSymptomList(
                 )
             }
         }
-        LargeButton(onClick = {intents(SetupWizardContract.Intent.OnSymptomConfirmed)},Modifier.padding(top = 16.dp)){
+        LargeButton(onClick = { intents(SetupWizardContract.Intent.OnSymptomConfirmed) }, Modifier.padding(top = 16.dp)) {
             ButtonText(Res.string.setup_wizard_button_select_symptom)
         }
     }

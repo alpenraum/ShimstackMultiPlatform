@@ -41,7 +41,8 @@ fun createDatabase(
     dispatchersProvider: DispatchersProvider
 ): AppDatabase =
     builder
-        .fallbackToDestructiveMigrationOnDowngrade(true) // .addMigration
+        .fallbackToDestructiveMigrationOnDowngrade(true)
+        .fallbackToDestructiveMigration(true) // .addMigration
         .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(dispatchersProvider.io)
         .build()

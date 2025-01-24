@@ -71,7 +71,11 @@ class SetupWizardViewModel(
             SetupWizardContract.Intent.OnSeePreviousRecommendationsClick -> {} // TODO
             SetupWizardContract.Intent.OnStartTroubleshootClick -> emitSelectSymptomState()
             is SetupWizardContract.Intent.OnSymptomSelected -> toggleSelectedSymptom(intent.symptom)
-            SetupWizardContract.Intent.OnBottomSheetDismissed -> viewModelScope.launch { createDefaultState() }
+            SetupWizardContract.Intent.OnBottomSheetDismissed ->
+                viewModelScope.launch {
+                    createDefaultState()
+                }
+
             SetupWizardContract.Intent.OnRecommendationAccepted -> TODO()
             SetupWizardContract.Intent.OnRecommendationDeclined -> TODO()
             SetupWizardContract.Intent.OnSymptomConfirmed -> TODO()
@@ -113,22 +117,25 @@ class SetupWizardViewModel(
             SetupSymptom.entries.map { setupSymptomViewMapper.map(it) }.also {
                 _state.emit(SetupWizardContract.State.SelectSymptom(it.toImmutableList(), bikes.value))
             }
+            _event.emit(SetupWizardContract.Event.ShowSymptomBottomSheet)
         }
 
-    private suspend fun createDefaultState(): SetupWizardContract.State {
+    private suspend fun createDefaultState() {
         val selectedBike = selectedBike.value
         setupRecommendations =
             setupRecommendationRepository.getSetupRecommendations(selectedBike?.id ?: -1).first().filter {
                 it.isAccepted == null
             }
-        return if (setupRecommendations.isNotEmpty()) {
-            SetupWizardContract.State.Recommendation(
-                setupRecommendationViewMapper.map(setupRecommendations.first()).toImmutableList(),
-                bikes.value
-            )
-        } else {
-            SetupWizardContract.State.Start(bikes.value)
-        }
+        _state.emit(
+            if (setupRecommendations.isNotEmpty()) {
+                SetupWizardContract.State.Recommendation(
+                    setupRecommendationViewMapper.map(setupRecommendations.first()).toImmutableList(),
+                    bikes.value
+                )
+            } else {
+                SetupWizardContract.State.Start(bikes.value)
+            }
+        )
     }
 }
 

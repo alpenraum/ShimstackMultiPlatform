@@ -3,7 +3,9 @@ package com.alpenraum.shimstack.ui.bottomnav
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,6 +25,15 @@ fun BottomNavFeature(navController: NavController) {
     val currentRoute = navBackStackEntry?.destination?.route
 
     NavigationSuiteScaffold(
+        navigationSuiteColors =
+            NavigationSuiteDefaults.colors(
+                navigationBarContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                navigationBarContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                navigationDrawerContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                navigationDrawerContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                navigationRailContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                navigationRailContentColor = MaterialTheme.colorScheme.onSecondaryContainer
+            ),
         navigationSuiteItems = {
             BottomNavigationItem.asList().forEach {
                 item(

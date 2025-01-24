@@ -29,6 +29,6 @@ sealed class BottomNavigationItem(
         BottomNavigationItem("settings", Res.string.settings, Res.drawable.home_24px)
 
     companion object {
-        fun asList() = listOf(Home, Settings)
+        fun asList() = listOf(Home, SetupTroubleshoot, Settings)
     }
 }
