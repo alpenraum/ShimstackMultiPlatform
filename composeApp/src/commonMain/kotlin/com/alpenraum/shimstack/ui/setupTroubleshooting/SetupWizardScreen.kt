@@ -49,7 +49,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.alpenraum.shimstack.base.use
-import com.alpenraum.shimstack.domain.troubleshooting.SetupSymptom
 import com.alpenraum.shimstack.ui.base.compose.ClassKeyedCrossfade
 import com.alpenraum.shimstack.ui.base.compose.components.AttachToLifeCycle
 import com.alpenraum.shimstack.ui.base.compose.components.BikePager
@@ -311,7 +310,7 @@ fun SetupSymptomList(
 ) {
     val isFront = remember { mutableStateOf(false) }
     val isHighSpeed = remember { mutableStateOf(false) }
-    val selectedSymptom = remember { mutableStateOf<SetupSymptom?>(null) }
+    val selectedSymptom = symptomViews.firstOrNull { it.selected }?.setupSymptom
     Column(modifier.padding(16.dp)) {
         LazyColumn(Modifier.heightIn(max = getScreenHeight() * 0.6f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             items(symptomViews) {
@@ -320,7 +319,6 @@ fun SetupSymptomList(
                     Modifier
                         .fillMaxWidth()
                         .clickable {
-                            selectedSymptom.value = it.setupSymptom
                             intents(SetupWizardContract.Intent.OnSymptomSelected(it.setupSymptom))
                         }
                 )
@@ -328,15 +326,15 @@ fun SetupSymptomList(
         }
         Column(Modifier.padding(top = 16.dp)) {
             HorizontalDivider()
-            AnimatedVisibility(selectedSymptom.value?.requiresLocation ?: false) {
+            AnimatedVisibility(selectedSymptom?.requiresLocation ?: false) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Is the problem on the front?", modifier = Modifier.weight(1.0f))
+                    Text("Is the problem on the front?", modifier = Modifier.weight(1.0f)) // TODO
                     Switch(isFront.value, onCheckedChange = { isFront.value = !isFront.value })
                 }
             }
-            AnimatedVisibility(selectedSymptom.value?.requiresSpeed ?: false) {
+            AnimatedVisibility(selectedSymptom?.requiresSpeed ?: false) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Does the issue only happen on hard impacts like landings and roots?", modifier = Modifier.weight(1.0f))
+                    Text("Does the issue only happen on hard impacts like landings and roots?", modifier = Modifier.weight(1.0f)) // TODO
                     Switch(isHighSpeed.value, onCheckedChange = { isHighSpeed.value = !isHighSpeed.value })
                 }
             }
@@ -354,8 +352,8 @@ private fun SetupSymptomItem(
     setupSymptomView: SetupSymptomView,
     modifier: Modifier = Modifier
 ) {
-    ShimstackCard {
-        Row(modifier) {
+    ShimstackCard { paddingValues ->
+        Row(modifier.padding(paddingValues)) {
             RadioButton(selected = setupSymptomView.selected, onClick = null)
             Column(Modifier.padding(start = 16.dp)) {
                 Text(stringResource(setupSymptomView.name), style = MaterialTheme.typography.titleMedium)

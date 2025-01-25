@@ -2,13 +2,11 @@ package com.alpenraum.shimstack.ui.base.compose.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -101,7 +99,7 @@ fun ShimstackCard(
     modifier: Modifier = Modifier,
     shape: Shape = shimstackRoundedCornerShape(),
     content:
-        @Composable ColumnScope.() -> Unit
+        @Composable ColumnScope.(PaddingValues) -> Unit
 ) {
     Card(
         modifier =
@@ -112,9 +110,7 @@ fun ShimstackCard(
                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer
             ),
         content = {
-            Column(modifier = Modifier.padding(PaddingValues(12.dp))) {
-                content()
-            }
+            content(PaddingValues(12.dp))
         },
         shape = shape
     )

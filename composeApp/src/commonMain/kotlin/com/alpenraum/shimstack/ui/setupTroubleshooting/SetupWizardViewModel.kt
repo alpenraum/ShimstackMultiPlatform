@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
 import org.koin.android.annotation.KoinViewModel
@@ -46,7 +45,7 @@ class SetupWizardViewModel(
         fetchBikes()
             .map { it.toImmutableList() }
             .onEach {
-                bikes.update { it }
+                bikes.emit(it)
                 emitDefaultState()
             }.launchIn(iOScope)
     }
@@ -84,6 +83,7 @@ class SetupWizardViewModel(
                 iOScope.launch {
                     TODO()
                 }
+
             SetupWizardContract.Intent.OnRecommendationDeclined -> TODO()
             is SetupWizardContract.Intent.OnSymptomConfirmed -> processSetupSymptom(intent.isFront, intent.isHighSpeed)
         }
@@ -109,7 +109,11 @@ class SetupWizardViewModel(
                                         selected = !it.selected
                                     )
                                 } else {
-                                    it
+                                    if (it.selected) {
+                                        it.copy(selected = false)
+                                    } else {
+                                        it
+                                    }
                                 }
                             }.toImmutableList(),
                         it.bikes
