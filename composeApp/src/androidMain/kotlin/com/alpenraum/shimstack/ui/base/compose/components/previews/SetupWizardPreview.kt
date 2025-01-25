@@ -95,3 +95,16 @@ fun SetupWizardSetupIssuePreview() =
             SetupSymptomList(state) { }
         }
     }
+
+@Preview(showBackground = true)
+@Composable
+fun SetupWizardUpdatePressurePreview() =
+    AppTheme {
+        val state =
+            SetupWizardContract.State.UpdateSuspensionPressure(
+                showFront = true,
+                showRear = true,
+                bikes = persistentListOf(Bike.empty())
+            )
+        Content(state) {}
+    }

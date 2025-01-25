@@ -12,7 +12,7 @@ import com.alpenraum.shimstack.data.model.setupRecommendation.SetupRecommendatio
 
 @Database(
     entities = [BikeDTO::class, BikeTemplateDTO::class, SetupRecommendationDTO::class],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 @ConstructedBy(AppDatabaseConstructor::class)

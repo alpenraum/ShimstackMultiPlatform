@@ -1,18 +1,25 @@
 package com.alpenraum.shimstack.ui.setupTroubleshooting
 
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.navigation.NavController
+import androidx.sqlite.SQLiteException
 import com.alpenraum.shimstack.base.BaseViewModel
 import com.alpenraum.shimstack.base.DispatchersProvider
 import com.alpenraum.shimstack.base.UnidirectionalViewModel
+import com.alpenraum.shimstack.base.logger.ShimstackLogger
 import com.alpenraum.shimstack.domain.SetupRecommendationRepository
 import com.alpenraum.shimstack.domain.bikeservice.BikeRepository
 import com.alpenraum.shimstack.domain.model.bike.Bike
+import com.alpenraum.shimstack.domain.model.measurementunit.MeasurementUnitType
+import com.alpenraum.shimstack.domain.model.measurementunit.Pressure
 import com.alpenraum.shimstack.domain.troubleshooting.GetSetupSolutionUseCase
 import com.alpenraum.shimstack.domain.troubleshooting.SetupRecommendation
 import com.alpenraum.shimstack.domain.troubleshooting.SetupSymptom
+import com.alpenraum.shimstack.domain.userSettings.GetUserSettingsUseCase
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -34,12 +41,14 @@ class SetupWizardViewModel(
     private val setupRecommendationViewMapper: SetupRecommendationViewMapper,
     private val setupSymptomViewMapper: SetupSymptomViewMapper,
     private val getSetupSolutionUseCase: GetSetupSolutionUseCase,
+    private val getUserSettingsUseCase: GetUserSettingsUseCase,
+    private val shimstackLogger: ShimstackLogger,
     dispatchersProvider: DispatchersProvider
 ) : BaseViewModel(dispatchersProvider),
     SetupWizardContract {
     private val bikes = MutableStateFlow<ImmutableList<Bike>>(persistentListOf())
     private var selectedBike: MutableStateFlow<Bike?> = MutableStateFlow(null)
-    private var setupRecommendations: List<SetupRecommendation> = emptyList()
+    private var setupRecommendation: SetupRecommendation? = null
 
     fun initVm() {
         fetchBikes()
@@ -80,13 +89,15 @@ class SetupWizardViewModel(
                     emitDefaultState()
                 }
 
-            SetupWizardContract.Intent.OnRecommendationAccepted ->
-                iOScope.launch {
-                    TODO()
-                }
+            SetupWizardContract.Intent.OnRecommendationAccepted -> onRecommendationAccepted()
 
             SetupWizardContract.Intent.OnRecommendationDeclined -> TODO()
             is SetupWizardContract.Intent.OnSymptomConfirmed -> processSetupSymptom(intent.isFront, intent.isHighSpeed)
+            is SetupWizardContract.Intent.OnConfirmUpdatedSuspensionPressure ->
+                onConfirmSuspensionPressure(
+                    intent.front,
+                    intent.rear
+                )
         }
     }
 
@@ -97,6 +108,83 @@ class SetupWizardViewModel(
                 emitDefaultState()
             }
         }
+
+    private fun onRecommendationAccepted() =
+        iOScope.launch {
+            setupRecommendation?.let {
+                try {
+                    setupRecommendationRepository.updateAcceptanceState(it.id ?: -1, true)
+
+                    if (it.rearSagDelta != null || it.frontSagDelta != null) {
+                        emitUpdateSuspensionPressure(it.frontSagDelta != null, it.rearSagDelta != null)
+                    } else {
+                        selectedBike.value?.let { bike ->
+                            shimstackLogger.d("oldBike: $bike")
+                            val newBike = bike.copyWithSetupRecommendation(it)
+                            shimstackLogger.d("newBike: $newBike")
+                            bikeRepository.updateBike(newBike)
+
+                            emitSuccessState()
+                            delay(3000L)
+                        }
+                        emitDefaultState()
+                    }
+                } catch (e: SQLiteException) {
+                    shimstackLogger.e("error during updating bike based on recommendation", e)
+                    _event.emit(SetupWizardContract.Event.Error)
+                }
+            }
+        }
+
+    private fun onConfirmSuspensionPressure(
+        front: TextFieldValue,
+        rear: TextFieldValue
+    ) = iOScope.launch {
+        setupRecommendation?.let {
+            selectedBike.value?.let { bike ->
+                val measurementUnit = getUserSettingsUseCase().first().measurementUnitType
+                val frontPressure = convertStringToPressure(front.text, measurementUnit)
+                val rearPressure = convertStringToPressure(rear.text, measurementUnit)
+
+                val frontSuspension = frontPressure?.let { bike.frontSuspension?.copy(pressure = frontPressure) }
+                val rearSuspension = rearPressure?.let { bike.rearSuspension?.copy(pressure = rearPressure) }
+
+                val bikeWithNewPressure = bike.copy(frontSuspension = frontSuspension, rearSuspension = rearSuspension)
+                bikeRepository.updateBike(bikeWithNewPressure.copyWithSetupRecommendation(it))
+
+                emitSuccessState()
+                delay(3000L)
+            } ?: run { _event.emit(SetupWizardContract.Event.Error) }
+        } ?: run { _event.emit(SetupWizardContract.Event.Error) }
+
+        emitDefaultState()
+    }
+
+    private fun convertStringToPressure(
+        value: String,
+        measurementUnitType: MeasurementUnitType
+    ): Pressure? {
+        val doubleValue = value.replace(",", ".").toDoubleOrNull() ?: return null
+        return if (measurementUnitType.isMetric()) Pressure(doubleValue) else Pressure.fromImperial(doubleValue)
+    }
+
+    private fun emitSuccessState() =
+        viewModelScope.launch {
+            _state.emit(SetupWizardContract.State.Success(bikes.value))
+        }
+
+    private suspend fun emitUpdateSuspensionPressure(
+        showFront: Boolean,
+        showRear: Boolean
+    ) {
+        _state.emit(
+            SetupWizardContract.State.UpdateSuspensionPressure(
+                showFront,
+                showRear,
+                bikes = bikes.value
+            )
+        )
+    }
 
     private fun toggleSelectedSymptom(symptom: SetupSymptom) {
         (_state.value as? SetupWizardContract.State.SelectSymptom)?.let {
@@ -150,14 +238,18 @@ class SetupWizardViewModel(
 
     private suspend fun emitDefaultState() {
         val selectedBike = selectedBike.value ?: return
-        setupRecommendations =
-            setupRecommendationRepository.getSetupRecommendations(selectedBike.id ?: -1).first().filter {
+        setupRecommendationRepository
+            .getSetupRecommendations(selectedBike.id ?: -1)
+            .first()
+            .filter {
                 it.isAccepted == null
+            }.also {
+                setupRecommendation = it.firstOrNull()
             }
         _state.emit(
-            if (setupRecommendations.isNotEmpty()) {
+            if (setupRecommendation != null) {
                 SetupWizardContract.State.Recommendation(
-                    setupRecommendationViewMapper.map(setupRecommendations.first()).toImmutableList(),
+                    setupRecommendationViewMapper.map(setupRecommendation!!).toImmutableList(),
                     bikes.value
                 )
             } else {
@@ -189,6 +281,12 @@ interface SetupWizardContract :
         ) : State(bikes)
 
         class Success(
+            bikes: ImmutableList<Bike?>
+        ) : State(bikes)
+
+        class UpdateSuspensionPressure(
+            val showFront: Boolean,
+            val showRear: Boolean,
             bikes: ImmutableList<Bike?>
         ) : State(bikes)
     }
@@ -232,5 +330,10 @@ interface SetupWizardContract :
         object OnRecommendationAccepted : Intent()
 
         object OnRecommendationDeclined : Intent()
+
+        class OnConfirmUpdatedSuspensionPressure(
+            val front: TextFieldValue,
+            val rear: TextFieldValue
+        ) : Intent()
     }
 }

@@ -20,6 +20,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation
+import androidx.compose.foundation.text.input.byValue
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -37,15 +40,18 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.alpenraum.shimstack.base.use
@@ -58,6 +64,7 @@ import com.alpenraum.shimstack.ui.base.compose.components.LargeSecondaryButton
 import com.alpenraum.shimstack.ui.base.compose.components.LoadingSpinner
 import com.alpenraum.shimstack.ui.base.compose.components.ShimstackCard
 import com.alpenraum.shimstack.ui.base.compose.components.getScreenHeight
+import com.alpenraum.shimstack.ui.base.compose.decimal
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.painterResource
@@ -158,7 +165,7 @@ fun Content(
                     when (it) {
                         is SetupWizardContract.State.Recommendation -> SetupRecommendationContent(it.setupRecommendation, intents)
                         is SetupWizardContract.State.Start -> StartContent(intents)
-                        is SetupWizardContract.State.Success -> Text("Success")
+                        is SetupWizardContract.State.Success -> Text("Success!", style = MaterialTheme.typography.titleMedium)
                         is SetupWizardContract.State.SelectSymptom, SetupWizardContract.State.Initializing ->
                             Column(
                                 Modifier.fillMaxSize(),
@@ -167,6 +174,8 @@ fun Content(
                             ) {
                                 LoadingSpinner()
                             }
+
+                        is SetupWizardContract.State.UpdateSuspensionPressure -> UpdateSuspensionPressure(it, intents = intents)
                     }
                 }
             }
@@ -334,7 +343,10 @@ fun SetupSymptomList(
             }
             AnimatedVisibility(selectedSymptom?.requiresSpeed ?: false) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Does the issue only happen on hard impacts like landings and roots?", modifier = Modifier.weight(1.0f)) // TODO
+                    Text(
+                        "Does the issue only happen on hard impacts like landings and roots?",
+                        modifier = Modifier.weight(1.0f)
+                    ) // TODO
                     Switch(isHighSpeed.value, onCheckedChange = { isHighSpeed.value = !isHighSpeed.value })
                 }
             }
@@ -362,3 +374,73 @@ private fun SetupSymptomItem(
         }
     }
 }
+
+@Composable
+private fun UpdateSuspensionPressure(
+    state: SetupWizardContract.State.UpdateSuspensionPressure,
+    modifier: Modifier = Modifier,
+    intents: (SetupWizardContract.Intent) -> Unit
+) {
+    Column(modifier) {
+        val frontTextFieldValue = remember { mutableStateOf(TextFieldValue()) }
+        val rearTextFieldValue = remember { mutableStateOf(TextFieldValue()) }
+        Text("Tell us your new Suspension pressures after changing the sag.")
+        Row {
+            if (state.showFront) {
+                SuspensionPressureInput(
+                    frontTextFieldValue.value,
+                    "Fork Pressure",
+                    Modifier.weight(1.0f)
+                ) { frontTextFieldValue.value = it }
+            }
+            if (state.showRear) {
+                SuspensionPressureInput(
+                    rearTextFieldValue.value,
+                    "Shock Pressure",
+                    Modifier.weight(1.0f)
+                ) { rearTextFieldValue.value = it }
+            }
+        }
+        Spacer(Modifier.weight(1.0f))
+        LargeButton(onClick = {
+            intents(
+                SetupWizardContract.Intent.OnConfirmUpdatedSuspensionPressure(
+                    frontTextFieldValue.value,
+                    rearTextFieldValue.value
+                )
+            )
+        }) {
+            Text("Confirm")
+        }
+    }
+}
+
+@Composable
+private fun SuspensionPressureInput(
+    textFieldValue: TextFieldValue,
+    label: String,
+    modifier: Modifier,
+    onTextChange: (TextFieldValue) -> Unit
+) {
+    Column(modifier) {
+        Text(label)
+        TextField(
+            textFieldValue,
+            onValueChange = {
+                if ("^(0|[1-9]\\d*)([.,]\\d*)?\$".toRegex().matches(it.text)) {
+                    onTextChange(it)
+                }
+            },
+            keyboardOptions = KeyboardOptions.decimal()
+        )
+    }
+}
+
+/**
+ * Returns [InputTransformation] that rejects input that is not allowed for amount input field.
+ */
+@Stable
+fun InputTransformation.decimal() =
+    byValue { current, proposed ->
+        if ("^(0|[1-9]\\d*)([.,]\\d*)?\$".toRegex().matches(proposed)) proposed else current
+    }

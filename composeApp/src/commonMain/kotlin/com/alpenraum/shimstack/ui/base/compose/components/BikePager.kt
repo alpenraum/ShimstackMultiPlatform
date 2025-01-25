@@ -27,7 +27,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import com.alpenraum.shimstack.base.logger.ShimstackLogger
 import com.alpenraum.shimstack.domain.model.bike.Bike
 import com.eygraber.compose.placeholder.PlaceholderHighlight
 import com.eygraber.compose.placeholder.material3.fade
@@ -35,7 +34,6 @@ import com.eygraber.compose.placeholder.placeholder
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.distinctUntilChanged
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.getKoin
 import shimstackmultiplatform.composeapp.generated.resources.Res
 import shimstackmultiplatform.composeapp.generated.resources.fab_add_bike
 import kotlin.math.absoluteValue
@@ -130,10 +128,6 @@ fun BikeCard(
     showPlaceholder: Boolean,
     content: @Composable (modifier: Modifier) -> Unit
 ) {
-    val logger = getKoin().get<ShimstackLogger>()
-    LaunchedEffect(showPlaceholder) {
-        logger.d("show placeholder: $showPlaceholder")
-    }
     Surface(
         modifier =
             modifier

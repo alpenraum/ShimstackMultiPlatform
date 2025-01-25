@@ -38,7 +38,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
             setupRecommendation.frontHSCDelta?.let {
                 add(
                     SetupWizardContract.SetupRecommendationView(
-                        it.absoluteValue,
+                        it.toDouble(),
                         front,
                         Res.string.hsc,
                         it.getRecommendationSentence(),
@@ -49,7 +49,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
             setupRecommendation.rearHSCDelta?.let {
                 add(
                     SetupWizardContract.SetupRecommendationView(
-                        it.absoluteValue,
+                        it.toDouble(),
                         rear,
                         Res.string.hsc,
                         it.getRecommendationSentence(),
@@ -60,7 +60,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
             setupRecommendation.frontLSCDelta?.let {
                 add(
                     SetupWizardContract.SetupRecommendationView(
-                        it.absoluteValue,
+                        it.toDouble(),
                         front,
                         Res.string.lsc,
                         it.getRecommendationSentence(),
@@ -71,7 +71,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
             setupRecommendation.rearLSCDelta?.let {
                 add(
                     SetupWizardContract.SetupRecommendationView(
-                        it.absoluteValue,
+                        it.toDouble(),
                         rear,
                         Res.string.lsc,
                         it.getRecommendationSentence(),
@@ -82,7 +82,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
             setupRecommendation.frontHSRDelta?.let {
                 add(
                     SetupWizardContract.SetupRecommendationView(
-                        it.absoluteValue,
+                        it.toDouble(),
                         front,
                         Res.string.hsr,
                         it.getRecommendationSentence(),
@@ -93,7 +93,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
             setupRecommendation.rearHSRDelta?.let {
                 add(
                     SetupWizardContract.SetupRecommendationView(
-                        it.absoluteValue,
+                        it.toDouble(),
                         rear,
                         Res.string.hsr,
                         it.getRecommendationSentence(),
@@ -104,7 +104,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
             setupRecommendation.frontLSRDelta?.let {
                 add(
                     SetupWizardContract.SetupRecommendationView(
-                        it.absoluteValue,
+                        it.toDouble(),
                         front,
                         Res.string.lsr,
                         it.getRecommendationSentence(),
@@ -115,7 +115,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
             setupRecommendation.rearLSRDelta?.let {
                 add(
                     SetupWizardContract.SetupRecommendationView(
-                        it.absoluteValue,
+                        it.toDouble(),
                         rear,
                         Res.string.lsr,
                         it.getRecommendationSentence(),
@@ -129,7 +129,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
                         Pressure(it.absoluteValue).getAsUnit(measurementUnitType),
                         front,
                         Res.string.label_tire_pressure,
-                        it.getRecommendationSentence(),
+                        it.toInt().getRecommendationSentence(),
                         measurementUnitType.getPressureStringRes()
                     )
                 )
@@ -140,7 +140,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
                         Pressure(it.absoluteValue).getAsUnit(measurementUnitType),
                         rear,
                         Res.string.label_tire_pressure,
-                        it.getRecommendationSentence(),
+                        it.toInt().getRecommendationSentence(),
                         measurementUnitType.getPressureStringRes()
                     )
                 )
@@ -149,7 +149,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
             setupRecommendation.frontTokenDelta?.let {
                 add(
                     SetupWizardContract.SetupRecommendationView(
-                        it.absoluteValue,
+                        it.toDouble(),
                         front,
                         Res.string.tokens,
                         it.getRecommendationSentence(),
@@ -160,7 +160,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
             setupRecommendation.rearTokenDelta?.let {
                 add(
                     SetupWizardContract.SetupRecommendationView(
-                       it.absoluteValue,
+                        it.toDouble(),
                         rear,
                         Res.string.tokens,
                         it.getRecommendationSentence(),
@@ -174,7 +174,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
                         it.absoluteValue*100,
                         front,
                         Res.string.sag,
-                        it.getRecommendationSentence(),
+                        it.toInt().getRecommendationSentence(),
                         measurementUnitType.getPressureStringRes()
                     )
                 )
@@ -185,7 +185,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
                         it.absoluteValue*100,
                         rear,
                         Res.string.sag,
-                        it.getRecommendationSentence(),
+                        it.toInt().getRecommendationSentence(),
                         Res.string.percent
                     )
                 )
@@ -193,7 +193,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
         }
 
 
-    private fun Double.getRecommendationSentence() =
+    private fun Int.getRecommendationSentence() =
         if (this >
             0
         ) {
