@@ -2,7 +2,7 @@ package com.alpenraum.shimstack.domain.troubleshooting
 
 import com.alpenraum.shimstack.domain.SetupRecommendationRepository
 import com.alpenraum.shimstack.domain.model.bike.Bike
-import com.alpenraum.shimstack.domain.troubleshooting.tire.CalculateTirePressureOffsetForSymptomUseCase
+import com.alpenraum.shimstack.domain.troubleshooting.symptomsolvers.UndersteerSymptomSolver
 import org.koin.core.annotation.Single
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -14,7 +14,7 @@ import kotlin.uuid.Uuid
 @Single
 class GetSetupSolutionUseCase(
     private val setupRecommendationRepository: SetupRecommendationRepository,
-    private val calculateTirePressureOffsetForSymptomUseCase: CalculateTirePressureOffsetForSymptomUseCase
+    private val understeerSymptomSolver: UndersteerSymptomSolver
 ) {
     @OptIn(ExperimentalUuidApi::class)
     suspend operator fun invoke(
@@ -32,14 +32,14 @@ class GetSetupSolutionUseCase(
                     SetupRecommendation(
                         wizardSession = currentWizardSession,
                         bikeId = bike.id ?: -1,
-                        frontTirePressureDelta = calculateTirePressureOffsetForSymptomUseCase(bike.frontTire)
+                        frontTirePressureDelta = understeerSymptomSolver.solve(bike.frontTire)
                     )
 
                 SetupSymptom.OVERSTEER ->
                     SetupRecommendation(
                         wizardSession = currentWizardSession,
                         bikeId = bike.id ?: -1,
-                        rearTirePressureDelta = calculateTirePressureOffsetForSymptomUseCase(bike.rearTire)
+                        rearTirePressureDelta = understeerSymptomSolver.solve(bike.rearTire)
                     )
 
                 SetupSymptom.MUSH -> TODO()

@@ -1,10 +1,8 @@
 package com.alpenraum.shimstack.ui.setupTroubleshooting
 
-import com.alpenraum.shimstack.domain.model.measurementunit.MeasurementUnitType
 import com.alpenraum.shimstack.domain.model.measurementunit.Pressure
 import com.alpenraum.shimstack.domain.troubleshooting.SetupRecommendation
 import com.alpenraum.shimstack.domain.userSettings.GetUserSettingsUseCase
-import com.alpenraum.shimstack.ui.bikeDetails.getPressureLabel
 import com.alpenraum.shimstack.ui.bikeDetails.getPressureStringRes
 import kotlinx.coroutines.flow.first
 import org.koin.core.annotation.Single
@@ -25,12 +23,12 @@ import shimstackmultiplatform.composeapp.generated.resources.tokens
 import kotlin.math.absoluteValue
 
 @Single
-class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserSettingsUseCase) {
-
+class SetupRecommendationViewMapper(
+    private val getUserSettingsUseCase: GetUserSettingsUseCase
+) {
     private val front = Res.string.front
     private val rear = Res.string.rear
     private val clicks = Res.string.clicks
-
 
     suspend fun map(setupRecommendation: SetupRecommendation): List<SetupWizardContract.SetupRecommendationView> =
         buildList {
@@ -129,7 +127,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
                         Pressure(it.absoluteValue).getAsUnit(measurementUnitType),
                         front,
                         Res.string.label_tire_pressure,
-                        it.toInt().getRecommendationSentence(),
+                        it.getRecommendationSentence(),
                         measurementUnitType.getPressureStringRes()
                     )
                 )
@@ -140,7 +138,7 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
                         Pressure(it.absoluteValue).getAsUnit(measurementUnitType),
                         rear,
                         Res.string.label_tire_pressure,
-                        it.toInt().getRecommendationSentence(),
+                        it.getRecommendationSentence(),
                         measurementUnitType.getPressureStringRes()
                     )
                 )
@@ -171,10 +169,10 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
             setupRecommendation.frontSagDelta?.let {
                 add(
                     SetupWizardContract.SetupRecommendationView(
-                        it.absoluteValue*100,
+                        it.absoluteValue * 100,
                         front,
                         Res.string.sag,
-                        it.toInt().getRecommendationSentence(),
+                        it.getRecommendationSentence(),
                         measurementUnitType.getPressureStringRes()
                     )
                 )
@@ -182,21 +180,22 @@ class SetupRecommendationViewMapper(private val getUserSettingsUseCase: GetUserS
             setupRecommendation.rearSagDelta?.let {
                 add(
                     SetupWizardContract.SetupRecommendationView(
-                        it.absoluteValue*100,
+                        it.absoluteValue * 100,
                         rear,
                         Res.string.sag,
-                        it.toInt().getRecommendationSentence(),
+                        it.getRecommendationSentence(),
                         Res.string.percent
                     )
                 )
             }
         }
 
+    private fun Int.getRecommendationSentence() = getRecSentenceBase(this > 0)
 
-    private fun Int.getRecommendationSentence() =
-        if (this >
-            0
-        ) {
+    private fun Double.getRecommendationSentence() = getRecSentenceBase(this > 0.0)
+
+    private fun getRecSentenceBase(isPositive: Boolean) =
+        if (isPositive) {
             Res.string.setup_wizard_label_recommendation_increase
         } else {
             Res.string.setup_wizard_label_recommendation_decrease

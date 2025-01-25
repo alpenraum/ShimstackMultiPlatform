@@ -24,8 +24,8 @@ class SetupSymptomViewMapper {
                 SetupSymptom.FRONT_FLIP_ON_TAKE_OFF -> Pair(Res.string.label_name, Res.string.hsc)
                 SetupSymptom.BIKE_PACKING_DOWN -> Pair(Res.string.label_name, Res.string.hsc)
                 SetupSymptom.BIKE_FALLS_DEEP_INTO_TRAVEL -> Pair(Res.string.label_name, Res.string.hsc)
-                SetupSymptom.SLUGGISH_HANDLING -> TODO()
-                SetupSymptom.WALLLOWY -> TODO()
+                SetupSymptom.SLUGGISH_HANDLING -> Pair(Res.string.label_name, Res.string.hsc)
+                SetupSymptom.WALLLOWY -> Pair(Res.string.label_name, Res.string.hsc)
             }
 
         return SetupSymptomView(name, description, setupSymptom)
