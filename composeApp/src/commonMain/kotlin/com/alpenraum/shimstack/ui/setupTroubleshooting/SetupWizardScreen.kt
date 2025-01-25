@@ -159,7 +159,7 @@ fun Content(
                         is SetupWizardContract.State.Recommendation -> SetupRecommendationContent(it.setupRecommendation, intents)
                         is SetupWizardContract.State.Start -> StartContent(intents)
                         is SetupWizardContract.State.Success -> Text("Success")
-                        is SetupWizardContract.State.SelectSymptom ->
+                        is SetupWizardContract.State.SelectSymptom, SetupWizardContract.State.Initializing ->
                             Column(
                                 Modifier.fillMaxSize(),
                                 verticalArrangement = Arrangement.Center,

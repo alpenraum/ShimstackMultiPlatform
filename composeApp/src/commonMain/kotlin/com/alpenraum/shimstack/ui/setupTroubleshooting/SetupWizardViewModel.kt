@@ -46,6 +46,7 @@ class SetupWizardViewModel(
             .map { it.toImmutableList() }
             .onEach {
                 bikes.emit(it)
+                selectedBike.emit(it.getOrNull(0))
                 emitDefaultState()
             }.launchIn(iOScope)
     }
@@ -55,7 +56,7 @@ class SetupWizardViewModel(
     private val _event = MutableSharedFlow<SetupWizardContract.Event>()
 
     private val _state: MutableStateFlow<SetupWizardContract.State> =
-        MutableStateFlow(SetupWizardContract.State.Start(persistentListOf()))
+        MutableStateFlow(SetupWizardContract.State.Initializing)
 
     override val state: StateFlow<SetupWizardContract.State> = _state.asStateFlow()
 
@@ -148,9 +149,9 @@ class SetupWizardViewModel(
         }
 
     private suspend fun emitDefaultState() {
-        val selectedBike = selectedBike.value
+        val selectedBike = selectedBike.value ?: return
         setupRecommendations =
-            setupRecommendationRepository.getSetupRecommendations(selectedBike?.id ?: -1).first().filter {
+            setupRecommendationRepository.getSetupRecommendations(selectedBike.id ?: -1).first().filter {
                 it.isAccepted == null
             }
         _state.emit(
@@ -171,6 +172,8 @@ interface SetupWizardContract :
     sealed class State(
         val bikes: ImmutableList<Bike?> = persistentListOf()
     ) {
+        object Initializing : State()
+
         class Start(
             bikes: ImmutableList<Bike?>
         ) : State(bikes)
