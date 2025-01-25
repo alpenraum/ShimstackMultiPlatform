@@ -22,6 +22,8 @@
     <string name="label_tire_width">Tire width</string>
     <string name="label_internal_rim_width">Internal rim width</string>
     <string name="label_tire_pressure">Tire Pressure</string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="btn_close">Close</string>
 
     <string name="tire">Tire</string>
     <string name="rear">Rear</string>
@@ -100,13 +102,27 @@
 
     <string name="setup_wizard_primary_cta">I need help</string>
     <string name="setup_wizard_button_see_history">Previous Recommendations</string>
+    <string name="setup_wizard_label_no_bikes">You need to first create a bike before you can use the Setup Wizard. You can do this on the homescreen!</string>
 
     <string name="setup_wizard_label_recommendation_header">Try this out:</string>
     <string name="setup_wizard_label_recommendation_decrease">Decrease %1$s %2$s by</string>
     <string name="setup_wizard_label_recommendation_increase">Increase %1$s %2$s by</string>
     <string name="setup_wizard_label_recommendation_cta">Did this improve your feel?</string>
+    <string name="setup_wizard_label_recommendation_is_front">Is the problem on the front?</string>
+    <string name="setup_wizard_label_recommendation_is_high_speed">Does the issue only happen on hard impacts like landings and roots?</string>
+    <string name="setup_wizard_label_updated_sus_pressure">Tell us your new Suspension pressures after changing the sag.</string>
 
     <string name="setup_wizard_button_select_symptom">This is my symptom</string>
+
+    <string name="btn_home_edit_detail_cards">Edit detail cards</string>
+
+    <string name="new_bike_label_separate_high_low_comp">Separate high- and low-speed Compression?</string>
+    <string name="new_bike_label_separate_high_low_rebound">Separate high- and low-speed Rebound?</string>
+
+    <string name="onboarding_welcome_header">Welcome to Shimstack!</string>
+    <string name="onboarding_welcome_sub_header">Welcome to your personal suspension expert.</string>
+    <string name="onboarding_add_first_bike">Add my first bike</string>
+    <string name="onboarding_skip_to_app">Take me to the app</string>
 
 
 

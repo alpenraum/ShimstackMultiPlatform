@@ -37,9 +37,14 @@ import com.alpenraum.shimstack.base.BuildInfo
 import com.alpenraum.shimstack.ui.base.compose.components.LargeButton
 import com.alpenraum.shimstack.ui.base.compose.components.LargeSecondaryButton
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import shimstackmultiplatform.composeapp.generated.resources.Res
 import shimstackmultiplatform.composeapp.generated.resources.ic_onboarding_background
 import shimstackmultiplatform.composeapp.generated.resources.ic_onboarding_foreground
+import shimstackmultiplatform.composeapp.generated.resources.onboarding_add_first_bike
+import shimstackmultiplatform.composeapp.generated.resources.onboarding_skip_to_app
+import shimstackmultiplatform.composeapp.generated.resources.onboarding_welcome_header
+import shimstackmultiplatform.composeapp.generated.resources.onboarding_welcome_sub_header
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -56,12 +61,12 @@ fun OnboardingScreen(
     ) {
         Spacer(modifier = Modifier.height(32.dp))
         Text(
-            text = "Welcome to Shimstack!",
+            text = stringResource(Res.string.onboarding_welcome_header),
             style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.Medium),
             textAlign = TextAlign.Center
         )
         Text(
-            text = "Welcome to your personal suspension expert.",
+            text = stringResource(Res.string.onboarding_welcome_sub_header),
             modifier = Modifier.padding(top = 8.dp)
         )
         Spacer(modifier = Modifier.height(32.dp))
@@ -96,7 +101,7 @@ fun OnboardingScreen(
                             )
                     ) {
                         Text(
-                            "Add my first bike",
+                            stringResource(Res.string.onboarding_add_first_bike),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -110,7 +115,7 @@ fun OnboardingScreen(
                             )
                     ) {
                         Text(
-                            "Take me to the app",
+                            stringResource(Res.string.onboarding_skip_to_app),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -126,7 +131,7 @@ fun OnboardingScreen(
                                 )
                         ) {
                             Text(
-                                "Autofill bikes with test data",
+                                "DEBUG ONLY - Autofill bikes with test data",
                                 style = MaterialTheme.typography.titleMedium
                             )
                         }

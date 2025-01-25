@@ -72,6 +72,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import shimstackmultiplatform.composeapp.generated.resources.Res
+import shimstackmultiplatform.composeapp.generated.resources.btn_close
 import shimstackmultiplatform.composeapp.generated.resources.comp
 import shimstackmultiplatform.composeapp.generated.resources.ic_save
 import shimstackmultiplatform.composeapp.generated.resources.label_edit
@@ -126,7 +127,7 @@ private fun Content(
             onClick = { intents(BikeDetailsContract.Intent.OnBackPressed) },
             modifier = Modifier.align(Alignment.TopEnd)
         ) {
-            Icon(Icons.Default.Close, contentDescription = "close")
+            Icon(Icons.Default.Close, contentDescription = stringResource(Res.string.btn_close))
         }
         Column(
             modifier =

@@ -62,6 +62,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import shimstackmultiplatform.composeapp.generated.resources.Res
+import shimstackmultiplatform.composeapp.generated.resources.btn_home_edit_detail_cards
 import shimstackmultiplatform.composeapp.generated.resources.copy_add_new_bike
 import shimstackmultiplatform.composeapp.generated.resources.il_empty_mountain
 
@@ -257,7 +258,7 @@ private fun BikeDetails(
         Button(
             onClick = {} // TODO: editable detail cards config
         ) {
-            Text("Edit detail cards")
+            Text(stringResource(Res.string.btn_home_edit_detail_cards))
         }
     }
     Spacer(modifier = Modifier.height(8.dp))

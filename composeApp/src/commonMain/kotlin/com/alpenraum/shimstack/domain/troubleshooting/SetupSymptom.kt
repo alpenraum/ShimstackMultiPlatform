@@ -7,9 +7,11 @@ enum class SetupSymptom(
     UNDERSTEER, // front rear tire balance - reduce front tire pressure IF NOT TOO LOW
     // - if not better through pressure then bring more weight to front by lowering handlebar
 
-    DOESNT_WANT_TO_TURN, // most likely front tire pressure too low
-
     OVERSTEER, // front rear tire balance - reduce rear tire pressure IF NOT TOO LOW
+
+    SLUGGISH_HANDLING, // front Tire pressure too low
+
+    WALLLOWY, // both Tire pressure too low
 
     MUSH(requiresLocation = true), // not enough pressure
 

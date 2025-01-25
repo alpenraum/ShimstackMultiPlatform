@@ -71,15 +71,23 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import shimstackmultiplatform.composeapp.generated.resources.Res
+import shimstackmultiplatform.composeapp.generated.resources.btn_confirm
 import shimstackmultiplatform.composeapp.generated.resources.err_technical
+import shimstackmultiplatform.composeapp.generated.resources.fork
 import shimstackmultiplatform.composeapp.generated.resources.il_support
 import shimstackmultiplatform.composeapp.generated.resources.label_no
 import shimstackmultiplatform.composeapp.generated.resources.label_yes
+import shimstackmultiplatform.composeapp.generated.resources.pressure
 import shimstackmultiplatform.composeapp.generated.resources.setup_wizard_button_see_history
 import shimstackmultiplatform.composeapp.generated.resources.setup_wizard_button_select_symptom
+import shimstackmultiplatform.composeapp.generated.resources.setup_wizard_label_no_bikes
 import shimstackmultiplatform.composeapp.generated.resources.setup_wizard_label_recommendation_cta
 import shimstackmultiplatform.composeapp.generated.resources.setup_wizard_label_recommendation_header
+import shimstackmultiplatform.composeapp.generated.resources.setup_wizard_label_recommendation_is_front
+import shimstackmultiplatform.composeapp.generated.resources.setup_wizard_label_recommendation_is_high_speed
+import shimstackmultiplatform.composeapp.generated.resources.setup_wizard_label_updated_sus_pressure
 import shimstackmultiplatform.composeapp.generated.resources.setup_wizard_primary_cta
+import shimstackmultiplatform.composeapp.generated.resources.shock
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -155,7 +163,7 @@ fun Content(
             if (state.bikes.isEmpty()) {
                 Box(Modifier.fillMaxSize().padding(paddingValues)) {
                     Text(
-                        "You need to first create a bike before you can use the Setup Wizard. You can do this on the homescreen!",
+                        stringResource(Res.string.setup_wizard_label_no_bikes),
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.align(Alignment.Center)
                     )
@@ -337,16 +345,16 @@ fun SetupSymptomList(
             HorizontalDivider()
             AnimatedVisibility(selectedSymptom?.requiresLocation ?: false) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Is the problem on the front?", modifier = Modifier.weight(1.0f)) // TODO
+                    Text(stringResource(Res.string.setup_wizard_label_recommendation_is_front), modifier = Modifier.weight(1.0f)) // TODO
                     Switch(isFront.value, onCheckedChange = { isFront.value = !isFront.value })
                 }
             }
             AnimatedVisibility(selectedSymptom?.requiresSpeed ?: false) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        "Does the issue only happen on hard impacts like landings and roots?",
+                        stringResource(Res.string.setup_wizard_label_recommendation_is_high_speed),
                         modifier = Modifier.weight(1.0f)
-                    ) // TODO
+                    )
                     Switch(isHighSpeed.value, onCheckedChange = { isHighSpeed.value = !isHighSpeed.value })
                 }
             }
@@ -384,19 +392,19 @@ private fun UpdateSuspensionPressure(
     Column(modifier) {
         val frontTextFieldValue = remember { mutableStateOf(TextFieldValue()) }
         val rearTextFieldValue = remember { mutableStateOf(TextFieldValue()) }
-        Text("Tell us your new Suspension pressures after changing the sag.")
+        Text(stringResource(Res.string.setup_wizard_label_updated_sus_pressure))
         Row {
             if (state.showFront) {
                 SuspensionPressureInput(
                     frontTextFieldValue.value,
-                    "Fork Pressure",
+                    "${stringResource(Res.string.fork)} ${stringResource(Res.string.pressure)}",
                     Modifier.weight(1.0f)
                 ) { frontTextFieldValue.value = it }
             }
             if (state.showRear) {
                 SuspensionPressureInput(
                     rearTextFieldValue.value,
-                    "Shock Pressure",
+                    "${stringResource(Res.string.shock)} ${stringResource(Res.string.pressure)}",
                     Modifier.weight(1.0f)
                 ) { rearTextFieldValue.value = it }
             }
@@ -410,7 +418,7 @@ private fun UpdateSuspensionPressure(
                 )
             )
         }) {
-            Text("Confirm")
+            ButtonText(Res.string.btn_confirm)
         }
     }
 }

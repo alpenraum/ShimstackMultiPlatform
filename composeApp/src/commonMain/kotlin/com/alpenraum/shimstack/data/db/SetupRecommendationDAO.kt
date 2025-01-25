@@ -25,5 +25,5 @@ interface SetupRecommendationDAO {
     @Query(
         "SELECT wizardSession FROM ${AppDatabase.TABLE_SETUP_RECOMMENDATION} WHERE bikeId = :bikeId AND isAccepted IS NULL ORDER BY creation_epoch_seconds DESC LIMIT 1"
     )
-    fun getOpenWizardSessionForBike(bikeId: Int): String?
+    suspend fun getOpenWizardSessionForBike(bikeId: Int): String?
 }
