@@ -1,10 +1,8 @@
 package com.alpenraum.shimstack.domain.troubleshooting
 
-import com.alpenraum.shimstack.data.datastore.ShimstackDatastore
 import com.alpenraum.shimstack.domain.SetupRecommendationRepository
 import com.alpenraum.shimstack.domain.model.bike.Bike
 import com.alpenraum.shimstack.domain.troubleshooting.tire.CalculateTirePressureOffsetForSymptomUseCase
-import kotlinx.coroutines.flow.first
 import org.koin.core.annotation.Single
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -16,28 +14,34 @@ import kotlin.uuid.Uuid
 @Single
 class GetSetupSolutionUseCase(
     private val setupRecommendationRepository: SetupRecommendationRepository,
-    private val calculateTirePressureOffsetForSymptomUseCase: CalculateTirePressureOffsetForSymptomUseCase,
-    private val shimstackDatastore: ShimstackDatastore
+    private val calculateTirePressureOffsetForSymptomUseCase: CalculateTirePressureOffsetForSymptomUseCase
 ) {
     @OptIn(ExperimentalUuidApi::class)
     suspend operator fun invoke(
         issue: SetupSymptom,
-        bike: Bike
+        bike: Bike,
+        isFront: Boolean?,
+        isOnHighSpeed: Boolean?
     ): SetupRecommendation {
-        val currentWizardSession = shimstackDatastore.currentWizardSession.first() ?: Uuid.random().toHexString()
+        val currentWizardSession =
+            setupRecommendationRepository.getOpenWizardSessionForBike(bikeId = bike.id ?: -1) ?: Uuid.random().toHexString()
 
         val recommendation =
             when (issue) {
-                SetupSymptom.UNDERSTEER -> SetupRecommendation(
-                    wizardSession = currentWizardSession,
-                    bikeId = bike.id ?: -1,
-                    frontTirePressureDelta = calculateTirePressureOffsetForSymptomUseCase(bike.frontTire)
-                )
-                SetupSymptom.OVERSTEER -> SetupRecommendation(
-                    wizardSession = currentWizardSession,
-                    bikeId = bike.id ?: -1,
-                    rearTirePressureDelta = calculateTirePressureOffsetForSymptomUseCase(bike.rearTire)
-                )
+                SetupSymptom.UNDERSTEER ->
+                    SetupRecommendation(
+                        wizardSession = currentWizardSession,
+                        bikeId = bike.id ?: -1,
+                        frontTirePressureDelta = calculateTirePressureOffsetForSymptomUseCase(bike.frontTire)
+                    )
+
+                SetupSymptom.OVERSTEER ->
+                    SetupRecommendation(
+                        wizardSession = currentWizardSession,
+                        bikeId = bike.id ?: -1,
+                        rearTirePressureDelta = calculateTirePressureOffsetForSymptomUseCase(bike.rearTire)
+                    )
+
                 SetupSymptom.MUSH -> TODO()
                 SetupSymptom.HARSH_OVER_SMALL_BUMPS -> TODO()
                 SetupSymptom.BRAKE_DIVE -> TODO()

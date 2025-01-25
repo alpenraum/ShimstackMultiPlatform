@@ -20,7 +20,6 @@ class ShimstackDatastore(
         private val PREF_ALLOW_ANALYTICS = booleanPreferencesKey("PREF_ALLOW_ANALYTICS")
         private val PREF_IS_ONBOARDING_COMPLETED = booleanPreferencesKey("PREF_IS_ONBOARDING_COMPLETED")
         private val PREF_MEASUREMENT_UNITS_TYPE = stringPreferencesKey("PREF_MEASUREMENT_UNIT")
-        private val PREF_CURRENT_WIZARD_SESSION = stringPreferencesKey("PREF_CURRENT_WIZARD_SESSION")
     }
 
     val preferredTheme: Flow<String> = PREF_PREFERRED_THEME.get(defaultValue = PreferredTheme.default.name)
@@ -45,16 +44,15 @@ class ShimstackDatastore(
 
     suspend fun setMeasurementUnit(measurementUnitType: String) = PREF_MEASUREMENT_UNITS_TYPE.set(measurementUnitType)
 
-    val currentWizardSession: Flow<String?> =
-        PREF_CURRENT_WIZARD_SESSION.getOrNull()
-
-    suspend fun setCurrentWizardSession(wizardSession: String) = PREF_CURRENT_WIZARD_SESSION.set(wizardSession)
-
     private fun <T> Preferences.Key<T>.get(defaultValue: T) = dataStore.data.map { it[this] ?: defaultValue }
 
     private fun <T> Preferences.Key<T>.getOrNull() = dataStore.data.map { it[this] }
 
     private suspend fun <T> Preferences.Key<T>.set(value: T) {
         dataStore.edit { it[this] = value }
+    }
+
+    private suspend fun <T> Preferences.Key<T>.delete() {
+        dataStore.edit { it.remove(this) }
     }
 }

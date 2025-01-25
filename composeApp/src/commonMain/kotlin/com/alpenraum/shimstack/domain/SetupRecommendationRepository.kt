@@ -8,5 +8,10 @@ interface SetupRecommendationRepository {
 
     suspend fun getSetupRecommendations(bikeId: Int): Flow<List<SetupRecommendation>>
 
-    suspend fun updateAcceptanceState(id: Int, state: Boolean)
+    suspend fun updateAcceptanceState(
+        id: Int,
+        state: Boolean
+    )
+
+    suspend fun getOpenWizardSessionForBike(bikeId: Int): String?
 }

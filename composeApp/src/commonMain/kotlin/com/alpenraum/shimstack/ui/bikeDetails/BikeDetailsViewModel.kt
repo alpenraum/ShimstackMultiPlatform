@@ -16,6 +16,7 @@ import com.alpenraum.shimstack.domain.model.measurementunit.Distance
 import com.alpenraum.shimstack.domain.model.measurementunit.MeasurementUnitType
 import com.alpenraum.shimstack.domain.model.measurementunit.Pressure
 import com.alpenraum.shimstack.domain.userSettings.GetUserSettingsUseCase
+import com.alpenraum.shimstack.ui.bottomnav.MainRoute
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,7 +43,7 @@ class BikeDetailsViewModel(
     dispatchersProvider: DispatchersProvider
 ) : BaseViewModel(dispatchersProvider),
     BikeDetailsContract {
-    private val selectedBikeId: Int = savedStateHandle.toRoute()
+    private val selectedBikeId: Int = savedStateHandle.toRoute<MainRoute.BikeDetails>().id
 
     private val bikeFlow: MutableStateFlow<Bike> = MutableStateFlow(Bike.empty())
     private val editModeFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)

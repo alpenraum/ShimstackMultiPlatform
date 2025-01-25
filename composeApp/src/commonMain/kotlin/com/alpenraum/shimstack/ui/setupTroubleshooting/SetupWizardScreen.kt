@@ -1,5 +1,6 @@
 package com.alpenraum.shimstack.ui.setupTroubleshooting
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -34,10 +35,12 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,6 +49,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.alpenraum.shimstack.base.use
+import com.alpenraum.shimstack.domain.troubleshooting.SetupSymptom
 import com.alpenraum.shimstack.ui.base.compose.ClassKeyedCrossfade
 import com.alpenraum.shimstack.ui.base.compose.components.AttachToLifeCycle
 import com.alpenraum.shimstack.ui.base.compose.components.BikePager
@@ -305,6 +309,9 @@ fun SetupSymptomList(
     modifier: Modifier = Modifier,
     intents: (SetupWizardContract.Intent) -> Unit
 ) {
+    val isFront = remember { mutableStateOf(false) }
+    val isHighSpeed = remember { mutableStateOf(false) }
+    val selectedSymptom = remember { mutableStateOf<SetupSymptom?>(null) }
     Column(modifier.padding(16.dp)) {
         LazyColumn(Modifier.heightIn(max = getScreenHeight() * 0.6f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             items(symptomViews) {
@@ -312,12 +319,32 @@ fun SetupSymptomList(
                     it,
                     Modifier
                         .fillMaxWidth()
-                        .clickable { intents(SetupWizardContract.Intent.OnSymptomSelected(it.setupSymptom)) }
+                        .clickable {
+                            selectedSymptom.value = it.setupSymptom
+                            intents(SetupWizardContract.Intent.OnSymptomSelected(it.setupSymptom))
+                        }
                 )
             }
         }
-        LargeButton(onClick = { intents(SetupWizardContract.Intent.OnSymptomConfirmed) }, Modifier.padding(top = 16.dp)) {
-            ButtonText(Res.string.setup_wizard_button_select_symptom)
+        Column(Modifier.padding(top = 16.dp)) {
+            HorizontalDivider()
+            AnimatedVisibility(selectedSymptom.value?.requiresLocation ?: false) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Is the problem on the front?", modifier = Modifier.weight(1.0f))
+                    Switch(isFront.value, onCheckedChange = { isFront.value = !isFront.value })
+                }
+            }
+            AnimatedVisibility(selectedSymptom.value?.requiresSpeed ?: false) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Does the issue only happen on hard impacts like landings and roots?", modifier = Modifier.weight(1.0f))
+                    Switch(isHighSpeed.value, onCheckedChange = { isHighSpeed.value = !isHighSpeed.value })
+                }
+            }
+            LargeButton(modifier = Modifier.padding(top = 4.dp), onClick = {
+                intents(SetupWizardContract.Intent.OnSymptomConfirmed(isFront.value, isHighSpeed.value))
+            }, enabled = symptomViews.any { it.selected }) {
+                ButtonText(Res.string.setup_wizard_button_select_symptom)
+            }
         }
     }
 }

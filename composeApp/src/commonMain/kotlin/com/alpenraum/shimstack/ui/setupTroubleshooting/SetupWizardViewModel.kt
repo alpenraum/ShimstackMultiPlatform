@@ -7,6 +7,7 @@ import com.alpenraum.shimstack.base.UnidirectionalViewModel
 import com.alpenraum.shimstack.domain.SetupRecommendationRepository
 import com.alpenraum.shimstack.domain.bikeservice.BikeRepository
 import com.alpenraum.shimstack.domain.model.bike.Bike
+import com.alpenraum.shimstack.domain.troubleshooting.GetSetupSolutionUseCase
 import com.alpenraum.shimstack.domain.troubleshooting.SetupRecommendation
 import com.alpenraum.shimstack.domain.troubleshooting.SetupSymptom
 import kotlinx.collections.immutable.ImmutableList
@@ -33,6 +34,7 @@ class SetupWizardViewModel(
     private val setupRecommendationRepository: SetupRecommendationRepository,
     private val setupRecommendationViewMapper: SetupRecommendationViewMapper,
     private val setupSymptomViewMapper: SetupSymptomViewMapper,
+    private val getSetupSolutionUseCase: GetSetupSolutionUseCase,
     dispatchersProvider: DispatchersProvider
 ) : BaseViewModel(dispatchersProvider),
     SetupWizardContract {
@@ -40,12 +42,14 @@ class SetupWizardViewModel(
     private var selectedBike: MutableStateFlow<Bike?> = MutableStateFlow(null)
     private var setupRecommendations: List<SetupRecommendation> = emptyList()
 
-    fun initVm() =
+    fun initVm() {
         fetchBikes()
             .map { it.toImmutableList() }
             .onEach {
                 bikes.update { it }
+                emitDefaultState()
             }.launchIn(iOScope)
+    }
 
     private fun fetchBikes() = bikeRepository.getAllBikes()
 
@@ -73,12 +77,15 @@ class SetupWizardViewModel(
             is SetupWizardContract.Intent.OnSymptomSelected -> toggleSelectedSymptom(intent.symptom)
             SetupWizardContract.Intent.OnBottomSheetDismissed ->
                 viewModelScope.launch {
-                    createDefaultState()
+                    emitDefaultState()
                 }
 
-            SetupWizardContract.Intent.OnRecommendationAccepted -> TODO()
+            SetupWizardContract.Intent.OnRecommendationAccepted ->
+                iOScope.launch {
+                    TODO()
+                }
             SetupWizardContract.Intent.OnRecommendationDeclined -> TODO()
-            SetupWizardContract.Intent.OnSymptomConfirmed -> TODO()
+            is SetupWizardContract.Intent.OnSymptomConfirmed -> processSetupSymptom(intent.isFront, intent.isHighSpeed)
         }
     }
 
@@ -86,7 +93,7 @@ class SetupWizardViewModel(
         viewModelScope.launch {
             bikes.value.getOrNull(bikeId)?.let {
                 selectedBike.emit(it)
-                createDefaultState()
+                emitDefaultState()
             }
         }
 
@@ -112,6 +119,22 @@ class SetupWizardViewModel(
         }
     }
 
+    private fun processSetupSymptom(
+        isFront: Boolean,
+        isHighSpeed: Boolean
+    ) = iOScope.launch {
+        _event.emit(SetupWizardContract.Event.HideSymptomBottomSheet)
+
+        val selectedSymptom =
+            (_state.value as? SetupWizardContract.State.SelectSymptom)?.symptoms?.firstOrNull { it.selected } ?: return@launch
+        val bike = selectedBike.value ?: return@launch
+        val front = if (selectedSymptom.setupSymptom.requiresLocation) isFront else null
+        val highSpeed = if (selectedSymptom.setupSymptom.requiresSpeed) isHighSpeed else null
+
+        getSetupSolutionUseCase(selectedSymptom.setupSymptom, bike, front, highSpeed)
+        emitDefaultState()
+    }
+
     private fun emitSelectSymptomState() =
         viewModelScope.launch {
             SetupSymptom.entries.map { setupSymptomViewMapper.map(it) }.also {
@@ -120,7 +143,7 @@ class SetupWizardViewModel(
             _event.emit(SetupWizardContract.Event.ShowSymptomBottomSheet)
         }
 
-    private suspend fun createDefaultState() {
+    private suspend fun emitDefaultState() {
         val selectedBike = selectedBike.value
         setupRecommendations =
             setupRecommendationRepository.getSetupRecommendations(selectedBike?.id ?: -1).first().filter {
@@ -192,7 +215,10 @@ interface SetupWizardContract :
             val symptom: SetupSymptom
         ) : Intent()
 
-        object OnSymptomConfirmed : Intent()
+        class OnSymptomConfirmed(
+            val isFront: Boolean,
+            val isHighSpeed: Boolean
+        ) : Intent()
 
         object OnBottomSheetDismissed : Intent()
 

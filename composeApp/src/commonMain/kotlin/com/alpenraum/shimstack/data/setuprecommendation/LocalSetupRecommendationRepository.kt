@@ -23,7 +23,13 @@ class LocalSetupRecommendationRepository(
             }
         }
 
-    override suspend fun updateAcceptanceState(id: Int, state: Boolean) {
-       setupRecommendationDAO.updateAcceptanceState(id, state)
+    override suspend fun updateAcceptanceState(
+        id: Int,
+        state: Boolean
+    ) {
+        setupRecommendationDAO.updateAcceptanceState(id, state)
     }
+
+    override suspend fun getOpenWizardSessionForBike(bikeId: Int): String? =
+        setupRecommendationDAO.getOpenWizardSessionForBike(bikeId)
 }

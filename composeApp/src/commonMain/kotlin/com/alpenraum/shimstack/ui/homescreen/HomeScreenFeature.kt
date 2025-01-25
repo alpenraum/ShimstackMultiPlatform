@@ -1,6 +1,7 @@
 package com.alpenraum.shimstack.ui.homescreen
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
@@ -49,6 +50,7 @@ import com.alpenraum.shimstack.domain.model.cardsetup.CardType
 import com.alpenraum.shimstack.ui.base.compose.components.AttachToLifeCycle
 import com.alpenraum.shimstack.ui.base.compose.components.BikePager
 import com.alpenraum.shimstack.ui.base.compose.components.CARD_MARGIN
+import com.alpenraum.shimstack.ui.base.compose.components.LoadingSpinner
 import com.alpenraum.shimstack.ui.base.compose.theme.AppTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -68,9 +70,6 @@ fun HomeScreenFeature(
     navController: NavController,
     viewModel: HomeScreenViewModel = koinViewModel()
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.initVm()
-    }
     AttachToLifeCycle(viewModel = viewModel)
     val (state, intents, event) = use(viewModel = viewModel, navController)
     HomeScreenContent(
@@ -78,6 +77,9 @@ fun HomeScreenFeature(
         event = event,
         intents = intents
     )
+    LaunchedEffect(Unit) {
+        viewModel.initVm()
+    }
 }
 
 @Composable
@@ -86,7 +88,7 @@ private fun HomeScreenContent(
     event: SharedFlow<HomeScreenContract.Event>,
     intents: (HomeScreenContract.Intent) -> Unit
 ) {
-    val isLoading = remember { mutableStateOf(false) }
+    val isLoading = remember { mutableStateOf(true) }
     val scope = rememberCoroutineScope()
     val pagerState =
         androidx.compose.foundation.pager
@@ -98,8 +100,13 @@ private fun HomeScreenContent(
         event.collectLatest {
             when (it) {
                 HomeScreenContract.Event.Error -> scope.launch { snackState.showSnackbar("ERROR") }
-                HomeScreenContract.Event.FinishedLoading -> isLoading.value = false
-                HomeScreenContract.Event.Loading -> isLoading.value = true
+                HomeScreenContract.Event.FinishedLoading -> {
+                    isLoading.value = false
+                }
+
+                HomeScreenContract.Event.Loading -> {
+                    isLoading.value = true
+                }
             }
         }
     }
@@ -123,36 +130,41 @@ private fun HomeScreenContent(
             },
             onSelectedBikeChanged = {}
         )
+        AnimatedVisibility(isLoading.value) {
+            LoadingSpinner()
+        }
 
-        AnimatedContent(
-            state.getBike(pagerState.currentPage),
-            modifier = Modifier.fillMaxHeight(),
-            label = "BikeDetails",
-            transitionSpec = {
-                if (lastPagerPosition.intValue > pagerState.currentPage) {
-                    // scroll to left
-                    (slideInHorizontally { x -> -x } + fadeIn()).togetherWith(
-                        slideOutHorizontally { x -> x } + fadeOut()
-                    )
-                } else {
-                    (slideInHorizontally { x -> x } + fadeIn()).togetherWith(
-                        slideOutHorizontally { x -> -x } + fadeOut()
-                    )
+        AnimatedVisibility(!isLoading.value) {
+            AnimatedContent(
+                state.getBike(pagerState.currentPage),
+                modifier = Modifier.fillMaxHeight(),
+                label = "BikeDetails",
+                transitionSpec = {
+                    if (lastPagerPosition.intValue > pagerState.currentPage) {
+                        // scroll to left
+                        (slideInHorizontally { x -> -x } + fadeIn()).togetherWith(
+                            slideOutHorizontally { x -> x } + fadeOut()
+                        )
+                    } else {
+                        (slideInHorizontally { x -> x } + fadeIn()).togetherWith(
+                            slideOutHorizontally { x -> -x } + fadeOut()
+                        )
+                    }
                 }
+            ) { bike ->
+                SideEffect {
+                    lastPagerPosition.intValue = pagerState.currentPage
+                }
+                bike?.let { bike1 ->
+                    Spacer(modifier = Modifier.height(16.dp))
+                    BikeDetails(
+                        bike = bike1,
+                        isMetric = state.isMetric,
+                        cardSetup = state.detailCardsSetup,
+                        intents = intents
+                    )
+                } ?: EmptyDetailsEyeCandy()
             }
-        ) { bike ->
-            SideEffect {
-                lastPagerPosition.intValue = pagerState.currentPage
-            }
-            bike?.let { bike1 ->
-                Spacer(modifier = Modifier.height(16.dp))
-                BikeDetails(
-                    bike = bike1,
-                    isMetric = state.isMetric,
-                    cardSetup = state.detailCardsSetup,
-                    intents = intents
-                )
-            } ?: EmptyDetailsEyeCandy()
         }
     }
     SnackbarHost(hostState = snackState)
@@ -208,9 +220,29 @@ private fun BikeDetails(
         ) {
             cardSetup.forEach {
                 when (it.type) {
-                    CardType.TIRES -> TireDetails(bigCard = it.bigCard, bike = bike, isMetric)
-                    CardType.FORK -> ForkDetails(bigCard = it.bigCard, bike = bike, isMetric)
-                    CardType.SHOCK -> ShockDetails(bigCard = it.bigCard, bike = bike, isMetric)
+                    CardType.TIRES ->
+                        TireDetails(
+                            bigCard = it.bigCard,
+                            bike = bike,
+                            isMetric,
+                            modifier = Modifier.align(Alignment.Bottom).fillMaxRowHeight()
+                        )
+
+                    CardType.FORK ->
+                        ForkDetails(
+                            bigCard = it.bigCard,
+                            bike = bike,
+                            isMetric,
+                            modifier = Modifier.align(Alignment.Bottom).fillMaxRowHeight()
+                        )
+
+                    CardType.SHOCK ->
+                        ShockDetails(
+                            bigCard = it.bigCard,
+                            bike = bike,
+                            isMetric,
+                            modifier = Modifier.align(Alignment.Bottom).fillMaxRowHeight()
+                        )
                 }
             }
         }
