@@ -144,9 +144,9 @@ fun Content(
                 .fillMaxWidth()
                 .padding(16.dp)
                 .padding(top = 16.dp)
-        ) {
+        ) { paddingValues ->
             if (state.bikes.isEmpty()) {
-                Box(Modifier.fillMaxSize()) {
+                Box(Modifier.fillMaxSize().padding(paddingValues)) {
                     Text(
                         "You need to first create a bike before you can use the Setup Wizard. You can do this on the homescreen!",
                         style = MaterialTheme.typography.titleMedium,
@@ -154,7 +154,7 @@ fun Content(
                     )
                 }
             } else {
-                ClassKeyedCrossfade(state) {
+                ClassKeyedCrossfade(state, modifier = Modifier.padding(paddingValues)) {
                     when (it) {
                         is SetupWizardContract.State.Recommendation -> SetupRecommendationContent(it.setupRecommendation, intents)
                         is SetupWizardContract.State.Start -> StartContent(intents)
@@ -229,8 +229,8 @@ private fun SetupRecommendationContent(
                     modifier = Modifier.weight(1.0f),
                     colors =
                         ButtonDefaults.filledTonalButtonColors().copy(
-                            containerColor = MaterialTheme.colorScheme.errorContainer,
-                            contentColor = MaterialTheme.colorScheme.onErrorContainer
+                            containerColor = MaterialTheme.colorScheme.error,
+                            contentColor = MaterialTheme.colorScheme.onError
                         )
                 ) {
                     Icon(Icons.Filled.Close, contentDescription = null)
