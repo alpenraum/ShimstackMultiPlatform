@@ -124,6 +124,46 @@
     <string name="onboarding_add_first_bike">Add my first bike</string>
     <string name="onboarding_skip_to_app">Take me to the app</string>
 
+    <string name="symptom_understeer_title">Understeer</string>
+    <string name="symptom_understeer_description">When you turn it feels like the bike want's to continue straight. If you push it feels like the front wheel is going to wash out.</string>
 
+    <string name="symptom_oversteer_title">Oversteer</string>
+    <string name="symptom_oversteer_description">The rear wheel likes to slip out in corners.</string>
+
+    <string name="symptom_sluggish_handling_title">Sluggish handling</string>
+    <string name="symptom_sluggish_handling_description">The bike feels sluggish. It changes direction very slowly and doesn't really listen to your inputs.</string>
+
+    <string name="symptom_wallowy_title">Wallowy</string>
+    <string name="symptom_wallowy_description">The bike feels unstable. It doesn't track straight and your inputs aren't directly translated into the bike.</string>
+
+    <string name="symptom_mush_title">Mushy</string>
+    <string name="symptom_mush_description">You always sit deep in the suspension travel and bottom out often. The bike might actually feel harsh and uncomfortable because of that.</string>
+
+    <string name="symptom_harsh_title">Harsh</string>
+    <string name="symptom_harsh_description">The bike feels harsh over small bumps. Your arms and legs fatigue after a short while and it feels like the suspension is doing nothing.</string>
+
+    <string name="symptom_brake_dive_title">Brake-dive</string>
+    <string name="symptom_brake_dive_description">The bike's front dive down deep into travel when breaking. You cannot hold yourself centered and feel like putting too much weight on the front.</string>
+
+    <string name="symptom_steep_dive_title">Steep-dive</string>
+    <string name="symptom_steep_dive_description">Similar to brake-dive, the bike's front dive down deep into travel when riding down something steep. You cannot hold yourself centered and feel like putting too much weight on the front.</string>
+
+    <string name="symptom_frequent_bottom_out_title">Frequent bottom-out</string>
+    <string name="symptom_frequent_bottom_out_description">Your suspension sag is set properly and the bike feels good, but you still bottom out regularly, even on smaller features.</string>
+
+    <string name="symptom_rare_full_travel_title">Rare full travel</string>
+    <string name="symptom_rare_full_travel_description">Your suspension sag is set properly and the bike feels good, but big hits feel a bit harsh and you never use the full travel of the suspension.</string>
+
+    <string name="symptom_front_flip_on_jumps_title">Front flip on jumps</string>
+    <string name="symptom_front_flip_on_jumps_description">Your bike has seen too much Redbull-Rampage and now wants to do a front-flip on every jump, whether you like it or not.</string>
+
+    <string name="symptom_packing_down_title">Bike packing down into travel</string>
+    <string name="symptom_packing_down_description">Especially on repeated hits like roots and rocks it feels like your bike can't recover quick enough and you get bucked around as a result.</string>
+
+    <string name="symptom_blows_through_travel_title">Bike blows through travel</string>
+    <string name="symptom_blows_through_travel_description">Your sag is good, but the bike doesn't feel supportive and blows through most of the travel easily.</string>
+
+    <string name="symptom_too_much_comp_title">Bike is uncomfortable</string>
+    <string name="symptom_too_much_comp_description">Your sag is good, but the bike feels hard and it's difficult to get deeper into the travel.</string>
 
 </resources>

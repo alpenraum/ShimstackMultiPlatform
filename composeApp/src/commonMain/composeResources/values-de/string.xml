@@ -115,5 +115,47 @@
     <string name="onboarding_add_first_bike">Erstelle mein erstes Bike</string>
     <string name="onboarding_skip_to_app">Bring mich zur App</string>
 
+    <string name="symptom_understeer_title">Untersteuern</string>
+    <string name="symptom_understeer_description">Beim Einlenken fühlt es sich an, als wolle das Bike geradeaus fahren. Wenn man drängt, fühlt es sich an, als würde das Vorderrad ausbrechen.</string>
+
+    <string name="symptom_oversteer_title">Übersteuern</string>
+    <string name="symptom_oversteer_description">Das Hinterrad rutscht in Kurven gerne weg.</string>
+
+    <string name="symptom_sluggish_handling_title">Schwergängiges Fahrverhalten</string>
+    <string name="symptom_sluggish_handling_description">Das Bike fühlt sich träge an. Es wechselt sehr langsam die Richtung und hört nicht wirklich auf deine Eingaben.</string>
+
+    <string name="symptom_wallowy_title">Nicht in Kontrolle</string>
+    <string name="symptom_wallowy_description">Das Bike fühlt sich instabil an. Es fährt nicht geradeaus und deine Eingaben werden nicht direkt auf das Bike übertragen.</string>
+
+    <string name="symptom_mush_title">Matschig</string>
+    <string name="symptom_mush_description">Du sitzt immer tief im Federweg und schlägt oft durch. Das Bike kann sich dadurch hart und unkomfortabel anfühlen.</string>
+
+    <string name="symptom_harsh_title">Harsch</string>
+    <string name="symptom_harsh_description">Das Bike fühlt sich bei kleinen Unebenheiten rau an. Arme und Beine ermüden schon nach kurzer Zeit und es fühlt sich an, als würde die Federung nichts tun.</string>
+
+    <string name="symptom_brake_dive_title">Starkes Eintauchen der Front beim Bremsen</string>
+    <string name="symptom_brake_dive_description">Die Front des Bikes taucht beim Bremsen tief in den Federweg ein. Man kann sich nicht in der Mitte halten und hat das Gefühl, zu viel Gewicht auf die Front zu legen</string>
+
+    <string name="symptom_steep_dive_title">Starkes Eintauchen der Front bei steilen Hängen</string>
+    <string name="symptom_steep_dive_description">Ähnlich wie beim Brake-Dive taucht die Front des Bike tief in den Federweg ein, wenn man etwas Steiles hinunterfährt. Man kann sich nicht in der Mitte halten und hat das Gefühl, zu viel Gewicht auf die Front zu legen.</string>
+
+    <string name="symptom_frequent_bottom_out_title">Häufiges Durchschlagen</string>
+    <string name="symptom_frequent_bottom_out_description">Dein Sag ist richtig eingestellt und das Bike fühlt sich gut an, aber du schlägst trotzdem regelmäßig durch, selbst bei kleineren Hindernissen.</string>
+
+    <string name="symptom_rare_full_travel_title">Selten voller Federweg</string>
+    <string name="symptom_rare_full_travel_description">Dein Sag ist richtig eingestellt und das Bike fühlt sich gut an, aber große Schläge fühlen sich etwas hart an und du nutzt nie den vollen Federweg.</string>
+
+    <string name="symptom_front_flip_on_jumps_title">Frontflip bei Sprüngen</string>
+    <string name="symptom_front_flip_on_jumps_description">Dein Bike hat zu viel Redbull-Rampage gesehen und will jetzt bei jedem Sprung einen Frontflip machen, ob du es willst oder nicht.</string>
+
+    <string name="symptom_packing_down_title">Bike bleibt im Federweg hängen</string>
+    <string name="symptom_packing_down_description">Besonders bei wiederholten Treffern wie bei Wurzeln und Felsen hat man das Gefühl, dass sich das Bike nicht schnell genug erholen kann und man dadurch herumgeschleudert wird.</string>
+
+    <string name="symptom_blows_through_travel_title">Das Bike fällt durch den Federweg</string>
+    <string name="symptom_blows_through_travel_description">Der Sag ist gut, aber das Bike fühlt sich nicht unterstützend an und fällt durch den größten Teil des Federwegs einfach durch.</string>
+
+    <string name="symptom_too_much_comp_title">Das Bike ist unkomfortabel</string>
+    <string name="symptom_too_much_comp_description">Dein Sag ist gut, aber das Rad fühlt sich hart an und es ist schwierig, tiefer in den Federweg zu kommen.</string>
+
 
 </resources>

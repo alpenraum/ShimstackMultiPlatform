@@ -21,7 +21,7 @@ enum class SetupSymptom(
 
     STEEP_DIVE, // not enough front pressure
 
-    FREQUENT_BOTTOM_OUT(requiresSpeed = true, requiresLocation = true), // IF pressure is good then more tokens else less pressure
+    FREQUENT_BOTTOM_OUT(requiresSpeed = true, requiresLocation = true), // IF pressure is good then more tokens else more pressure
 
     RARE_FULL_TRAVEL(requiresSpeed = true, requiresLocation = true), // IF pressure is good then less tokens else less pressure
 
@@ -29,7 +29,9 @@ enum class SetupSymptom(
 
     BIKE_PACKING_DOWN(requiresSpeed = true, requiresLocation = true), // lsr faster
 
-    BIKE_FALLS_DEEP_INTO_TRAVEL(requiresSpeed = true, requiresLocation = true) // more compression
+    BIKE_BLOWS_THROUGH_TRAVEL(requiresSpeed = true, requiresLocation = true), // more compression
+
+    BIKE_TOO_MUCH_COMP(requiresSpeed = true, requiresLocation = true) // less compression
 }
 
 enum class SetupAnalysisResult {

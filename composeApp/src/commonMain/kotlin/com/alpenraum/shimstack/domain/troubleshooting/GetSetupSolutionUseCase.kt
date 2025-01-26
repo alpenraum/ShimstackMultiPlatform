@@ -50,9 +50,10 @@ class GetSetupSolutionUseCase(
                 SetupSymptom.RARE_FULL_TRAVEL -> TODO()
                 SetupSymptom.FRONT_FLIP_ON_TAKE_OFF -> TODO()
                 SetupSymptom.BIKE_PACKING_DOWN -> TODO()
-                SetupSymptom.BIKE_FALLS_DEEP_INTO_TRAVEL -> TODO()
+                SetupSymptom.BIKE_BLOWS_THROUGH_TRAVEL -> TODO()
                 SetupSymptom.SLUGGISH_HANDLING -> TODO()
                 SetupSymptom.WALLLOWY -> TODO()
+                SetupSymptom.BIKE_TOO_MUCH_COMP -> TODO()
             }
 
         setupRecommendationRepository.saveSetupRecommendation(recommendation)
