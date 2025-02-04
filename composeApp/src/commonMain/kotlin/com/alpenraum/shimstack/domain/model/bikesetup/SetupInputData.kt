@@ -3,6 +3,8 @@ package com.alpenraum.shimstack.domain.model.bikesetup
 // TODO: move to UI layer
 data class SetupInputData(
     val frontTirePressure: String? = null,
+    val frontSag: String? = null,
+    val rearSag: String? = null,
     val rearTirePressure: String? = null,
     val frontSuspensionPressure: String? = null,
     val rearSuspensionPressure: String? = null,

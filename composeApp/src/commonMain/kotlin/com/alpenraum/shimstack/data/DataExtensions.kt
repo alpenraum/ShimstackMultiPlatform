@@ -44,6 +44,7 @@ fun BikeTemplate.toDTO() =
 fun SuspensionDTO.toDomain() =
     Suspension(
         Pressure(pressure),
+        sag,
         compression.toDomain(),
         rebound.toDomain(),
         tokens,
@@ -51,7 +52,7 @@ fun SuspensionDTO.toDomain() =
     )
 
 fun Suspension.toDTO() =
-    SuspensionDTO(pressure.asMetric(), compression.toDTO(), rebound.toDTO(), tokens, travel.asMetric().toInt())
+    SuspensionDTO(pressure.asMetric(), sag, compression.toDTO(), rebound.toDTO(), tokens, travel.asMetric().toInt())
 
 fun DampingDTO.toDomain() = Damping(lowSpeedFromClosed, highSpeedFromClosed)
 

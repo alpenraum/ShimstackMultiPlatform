@@ -9,3 +9,8 @@ fun KeyboardOptions.Companion.number(imeAction: ImeAction = ImeAction.Default) =
         keyboardType = KeyboardType.Number,
         imeAction = imeAction
     )
+fun KeyboardOptions.Companion.decimal(imeAction: ImeAction = ImeAction.Default) =
+    Default.copy(
+        keyboardType = KeyboardType.Decimal,
+        imeAction = imeAction
+    )

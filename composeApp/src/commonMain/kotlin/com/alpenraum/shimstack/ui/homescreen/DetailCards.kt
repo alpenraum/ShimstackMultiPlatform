@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -67,13 +68,15 @@ fun TireDetails(
             SimpleTextPair(
                 heading = stringResource(Res.string.front),
                 content = data.first.content,
-                bigCard = bigCard
+                bigCard = bigCard,
+                modifier = Modifier.weight(1.0f)
             )
             VerticalDivider(modifier = Modifier.padding(horizontal = 16.dp))
             SimpleTextPair(
                 heading = stringResource(Res.string.rear),
                 content = data.second.content,
-                bigCard = bigCard
+                bigCard = bigCard,
+                modifier = Modifier.weight(1.0f)
             )
         }
     }
@@ -114,13 +117,15 @@ private fun SimpleTextPair(
 fun ForkDetails(
     bigCard: Boolean,
     bike: Bike,
-    isMetric: Boolean
+    isMetric: Boolean,
+    modifier: Modifier = Modifier
 ) {
     SuspensionDetails(
         bigCard = bigCard,
         suspensionData = bike.getFrontSuspensionUIData(isMetric),
         titleRes = Res.string.fork,
-        errorTextRes = Res.string.copy_no_fork
+        errorTextRes = Res.string.copy_no_fork,
+        modifier = modifier
     )
 }
 
@@ -128,13 +133,15 @@ fun ForkDetails(
 fun ShockDetails(
     bigCard: Boolean,
     bike: Bike,
-    isMetric: Boolean
+    isMetric: Boolean,
+    modifier: Modifier = Modifier
 ) {
     SuspensionDetails(
         bigCard = bigCard,
         suspensionData = bike.getRearSuspensionUIData(isMetric),
         titleRes = Res.string.shock,
-        errorTextRes = Res.string.copy_no_shock
+        errorTextRes = Res.string.copy_no_shock,
+        modifier = modifier
     )
 }
 
@@ -143,16 +150,17 @@ private fun SuspensionDetails(
     bigCard: Boolean,
     titleRes: StringResource,
     errorTextRes: StringResource,
-    suspensionData: ImmutableList<UIDataLabel>?
+    suspensionData: ImmutableList<UIDataLabel>?,
+    modifier: Modifier = Modifier
 ) {
-    DetailsCard(title = titleRes, bigCard = bigCard) {
+    DetailsCard(title = titleRes, bigCard = bigCard, modifier = modifier) {
         suspensionData?.let {
             Column(
                 modifier =
                     Modifier
-                        .fillMaxSize()
-                        .padding(top = 16.dp)
-                        .weight(1.0f),
+                        .fillMaxWidth()
+                        .height(IntrinsicSize.Min)
+                        .padding(top = 16.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -164,9 +172,8 @@ private fun SuspensionDetails(
                             .padding(bottom = 8.dp)
                             .weight(1.0f)
                 ) {
-                    SuspensionQuarter(data = it[0]) // ,modifier = Modifier.weight(1.0f)
-                    // modifier = Modifier.weight(1.0f,fill = false)
-                    SuspensionQuarter(data = it[1])
+                    SuspensionQuarter(data = it[0], modifier = Modifier.weight(1.0f))
+                    SuspensionQuarter(data = it[1], modifier = Modifier.weight(1.0f))
                 }
                 HorizontalDivider()
                 Row(
@@ -177,8 +184,8 @@ private fun SuspensionDetails(
                             .padding(top = 8.dp)
                             .weight(1.0f)
                 ) {
-                    SuspensionQuarter(data = it[2])
-                    SuspensionQuarter(data = it[3])
+                    SuspensionQuarter(data = it[2], modifier = Modifier.weight(1.0f))
+                    SuspensionQuarter(data = it[3], modifier = Modifier.weight(1.0f))
                 }
             }
         } ?: run {
@@ -186,8 +193,7 @@ private fun SuspensionDetails(
                 modifier =
                     Modifier
                         .fillMaxSize()
-                        .padding(8.dp)
-                        .weight(1.0f),
+                        .padding(8.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -216,7 +222,7 @@ private fun SuspensionQuarter(
         }
 
         is UIDataLabel.Complex -> {
-            Column(modifier = Modifier) {
+            Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
                 data.data.forEach {
                     Row(modifier = Modifier.padding(bottom = 4.dp)) {
                         Text(
@@ -250,7 +256,7 @@ private fun DetailsCard(
     ShimstackCard(
         modifier =
             modifier
-                .height(CARD_DIMENSION)
+                .height(IntrinsicSize.Min)
                 .width(if (bigCard) CARD_DIMENSION * 2.0f + CARD_MARGIN else CARD_DIMENSION * 1.0f)
                 .padding(vertical = CARD_MARGIN / 2.0f)
     ) {
@@ -292,6 +298,7 @@ private val testBike =
         frontSuspension =
             Suspension(
                 Pressure(60.0),
+                0.3,
                 Damping(1),
                 Damping(1),
                 3,
@@ -314,6 +321,7 @@ private val testBikeMax =
         frontSuspension =
             Suspension(
                 Pressure(60.0),
+                0.3,
                 Damping(1, 2),
                 Damping(3, 4),
                 5,

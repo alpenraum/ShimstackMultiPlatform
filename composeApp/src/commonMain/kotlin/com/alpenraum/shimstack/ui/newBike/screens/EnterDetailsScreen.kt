@@ -65,6 +65,8 @@ import shimstackmultiplatform.composeapp.generated.resources.label_tire_width
 import shimstackmultiplatform.composeapp.generated.resources.label_travel
 import shimstackmultiplatform.composeapp.generated.resources.label_type
 import shimstackmultiplatform.composeapp.generated.resources.mm
+import shimstackmultiplatform.composeapp.generated.resources.new_bike_label_separate_high_low_comp
+import shimstackmultiplatform.composeapp.generated.resources.new_bike_label_separate_high_low_rebound
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -292,7 +294,7 @@ private fun ColumnScope.SuspensionInput(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Separate high- and low-speed Compression? ", modifier = Modifier.weight(1.0f))
+                Text(stringResource(Res.string.new_bike_label_separate_high_low_comp), modifier = Modifier.weight(1.0f))
                 Switch(
                     checked = hscSwitchState,
                     onCheckedChange = onHSCSwitchToggle,
@@ -301,7 +303,7 @@ private fun ColumnScope.SuspensionInput(
             }
             Spacer(modifier = Modifier.height(8.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Separate high- and low-speed Rebound?", modifier = Modifier.weight(1.0f))
+                Text(stringResource(Res.string.new_bike_label_separate_high_low_rebound), modifier = Modifier.weight(1.0f))
                 Switch(
                     checked = hsrSwitchState,
                     onCheckedChange = onHSRSwitchToggle,

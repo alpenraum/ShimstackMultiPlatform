@@ -71,6 +71,7 @@ kotlin {
 
             implementation(libs.datastore.preferences)
             implementation(libs.datastore)
+            implementation(libs.kotlinx.datetime)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

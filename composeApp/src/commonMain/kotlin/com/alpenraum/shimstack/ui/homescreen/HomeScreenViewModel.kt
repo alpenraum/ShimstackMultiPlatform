@@ -16,6 +16,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -30,7 +31,6 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
@@ -70,9 +70,6 @@ class HomeScreenViewModel(
     ) {
         when (intent) {
             HomeScreenContract.Intent.OnRefresh -> {}
-            is HomeScreenContract.Intent.OnViewPagerSelectionChanged -> {
-                onViewPagerSelectionChanged()
-            }
 
             HomeScreenContract.Intent.OnAddNewBike -> {
                 viewModelScope.launch {
@@ -96,18 +93,16 @@ class HomeScreenViewModel(
 
     fun initVm() =
         fetchBikes()
-            .onStart { HomeScreenContract.Event.Loading }
-            .map { it.toImmutableList() }
+            .onStart {
+                eventFlow.emit(HomeScreenContract.Event.Loading)
+            }.map { it.toImmutableList() }
             .onEach {
-                bikes.update { it }
+                bikes.emit(it)
+                delay(200)
                 eventFlow.emit(HomeScreenContract.Event.FinishedLoading)
             }.launchIn(iOScope)
 
     private fun fetchBikes() = bikeRepository.getAllBikes()
-
-    private fun onViewPagerSelectionChanged() {
-        viewModelScope.launch { eventFlow.emit(HomeScreenContract.Event.NewPageSelected) }
-    }
 
     private fun createState(
         state: Triple<ImmutableList<Bike>, ImmutableList<CardSetup>, MeasurementUnitType>
@@ -136,14 +131,10 @@ interface HomeScreenContract :
         data object FinishedLoading : Event()
 
         data object Error : Event()
-
-        data object NewPageSelected : Event()
     }
 
     sealed class Intent {
         data object OnRefresh : Intent()
-
-        data object OnViewPagerSelectionChanged : Intent()
 
         data object OnAddNewBike : Intent()
 

@@ -46,7 +46,13 @@ class ShimstackDatastore(
 
     private fun <T> Preferences.Key<T>.get(defaultValue: T) = dataStore.data.map { it[this] ?: defaultValue }
 
+    private fun <T> Preferences.Key<T>.getOrNull() = dataStore.data.map { it[this] }
+
     private suspend fun <T> Preferences.Key<T>.set(value: T) {
         dataStore.edit { it[this] = value }
+    }
+
+    private suspend fun <T> Preferences.Key<T>.delete() {
+        dataStore.edit { it.remove(this) }
     }
 }

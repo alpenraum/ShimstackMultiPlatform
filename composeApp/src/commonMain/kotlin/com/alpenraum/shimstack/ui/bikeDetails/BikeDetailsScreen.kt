@@ -55,6 +55,8 @@ import com.alpenraum.shimstack.domain.model.suspension.Damping
 import com.alpenraum.shimstack.domain.model.suspension.Suspension
 import com.alpenraum.shimstack.ui.base.compose.ClassKeyedCrossfade
 import com.alpenraum.shimstack.ui.base.compose.components.AttachToLifeCycle
+import com.alpenraum.shimstack.ui.base.compose.components.BikeCard
+import com.alpenraum.shimstack.ui.base.compose.components.BikeCardContent
 import com.alpenraum.shimstack.ui.base.compose.components.ButtonText
 import com.alpenraum.shimstack.ui.base.compose.components.InfoText
 import com.alpenraum.shimstack.ui.base.compose.components.ShimstackCard
@@ -62,8 +64,6 @@ import com.alpenraum.shimstack.ui.base.compose.components.TextInput
 import com.alpenraum.shimstack.ui.base.compose.number
 import com.alpenraum.shimstack.ui.base.compose.theme.AppTheme
 import com.alpenraum.shimstack.ui.bikeDetails.BikeDetailsContract.State.Edit
-import com.alpenraum.shimstack.ui.homescreen.BikeCard
-import com.alpenraum.shimstack.ui.homescreen.BikeCardContent
 import kotlinx.coroutines.flow.collectLatest
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
@@ -72,6 +72,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import shimstackmultiplatform.composeapp.generated.resources.Res
+import shimstackmultiplatform.composeapp.generated.resources.btn_close
 import shimstackmultiplatform.composeapp.generated.resources.comp
 import shimstackmultiplatform.composeapp.generated.resources.ic_save
 import shimstackmultiplatform.composeapp.generated.resources.label_edit
@@ -126,7 +127,7 @@ private fun Content(
             onClick = { intents(BikeDetailsContract.Intent.OnBackPressed) },
             modifier = Modifier.align(Alignment.TopEnd)
         ) {
-            Icon(Icons.Default.Close, contentDescription = "close")
+            Icon(Icons.Default.Close, contentDescription = stringResource(Res.string.btn_close))
         }
         Column(
             modifier =
@@ -669,6 +670,7 @@ private fun Preview() {
                         frontSuspension =
                             Suspension(
                                 pressure = Pressure(10.0),
+                                sag = 0.3,
                                 compression = Damping(0, 1),
                                 rebound = Damping(2, 3),
                                 travel = Distance(150.0),
@@ -695,6 +697,7 @@ private fun EditPreview() {
                         frontSuspension =
                             Suspension(
                                 pressure = Pressure(10.0),
+                                sag = 0.3,
                                 compression = Damping(0, 1),
                                 rebound = Damping(2, 3),
                                 travel = Distance(150.0),

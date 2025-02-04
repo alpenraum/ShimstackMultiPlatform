@@ -1,11 +1,13 @@
 package com.alpenraum.shimstack.domain.model.measurementunit
 
+import com.alpenraum.shimstack.base.round
+
 data class Distance(
     private val distanceInMM: Double
 ) : MeasurementUnit {
     override fun asMetric(): Double = distanceInMM
 
-    override fun asImperial(): Double = distanceInMM * MM_TO_INCH_CONVERSION
+    override fun asImperial(): Double = (distanceInMM * MM_TO_INCH_CONVERSION).round(1)
 
     override val storageKey = "PREF_DISTANCE_UNIT"
 

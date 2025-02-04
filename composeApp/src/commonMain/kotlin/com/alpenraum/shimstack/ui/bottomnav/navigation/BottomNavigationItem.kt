@@ -1,27 +1,43 @@
 package com.alpenraum.shimstack.ui.bottomnav.navigation
 
-import org.jetbrains.compose.resources.DrawableResource
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bolt
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Bolt
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.ui.graphics.vector.ImageVector
 import org.jetbrains.compose.resources.StringResource
 import shimstackmultiplatform.composeapp.generated.resources.Res
-import shimstackmultiplatform.composeapp.generated.resources.home_24px
 import shimstackmultiplatform.composeapp.generated.resources.settings
 import shimstackmultiplatform.composeapp.generated.resources.title_home
+import shimstackmultiplatform.composeapp.generated.resources.title_setup_troubleshoot
 
 sealed class BottomNavigationItem(
     val route: String,
-    var titleRes: StringResource,
-    var iconRes: DrawableResource
+    val titleRes: StringResource,
+    val icon: ImageVector,
+    val selectedIcon: ImageVector
 ) {
     data object Home : BottomNavigationItem(
         "home",
         Res.string.title_home,
-        Res.drawable.home_24px
+        Icons.Outlined.Home,
+        Icons.Filled.Home
+    )
+
+    data object SetupTroubleshoot : BottomNavigationItem(
+        "setupTroubleshoot",
+        Res.string.title_setup_troubleshoot,
+        Icons.Outlined.Bolt,
+        Icons.Filled.Bolt
     )
 
     data object Settings :
-        BottomNavigationItem("settings", Res.string.settings, Res.drawable.home_24px)
+        BottomNavigationItem("settings", Res.string.settings, Icons.Outlined.Settings, Icons.Filled.Settings)
 
     companion object {
-        fun asList() = listOf(Home, Settings)
+        fun asList() = listOf(Home, SetupTroubleshoot, Settings)
     }
 }

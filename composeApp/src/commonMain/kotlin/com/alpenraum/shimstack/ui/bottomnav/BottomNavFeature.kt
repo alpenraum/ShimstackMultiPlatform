@@ -13,7 +13,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.alpenraum.shimstack.ui.bottomnav.navigation.BottomNavigationGraph
 import com.alpenraum.shimstack.ui.bottomnav.navigation.BottomNavigationItem
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -25,8 +24,9 @@ fun BottomNavFeature(navController: NavController) {
     NavigationSuiteScaffold(
         navigationSuiteItems = {
             BottomNavigationItem.asList().forEach {
+                val icon = if (it.route == currentRoute) it.selectedIcon else it.icon
                 item(
-                    icon = { Icon(painterResource(it.iconRes), contentDescription = null) },
+                    icon = { Icon(icon, contentDescription = null) },
                     label = { Text(stringResource(it.titleRes)) },
                     selected = it.route == currentRoute,
                     onClick = {

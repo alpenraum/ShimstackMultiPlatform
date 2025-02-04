@@ -21,12 +21,14 @@ fun OnboardingFeature(
     ) {
         OnboardingScreen(
             onSkipButtonClicked = { viewModel.onSkipClicked(navigator) },
+            onAutoFillClick = { viewModel.onAutoFillClick(navigator) },
             modifier =
                 Modifier
                     .padding(it)
-                    .padding(16.dp)
-        ) {
-            viewModel.onAddBikeNavigationClicked(navigator)
-        }
+                    .padding(16.dp),
+            onAddBikeClicked = {
+                viewModel.onAddBikeNavigationClicked(navigator)
+            }
+        )
     }
 }

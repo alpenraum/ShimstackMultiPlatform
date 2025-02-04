@@ -48,7 +48,6 @@ class UserSettingsDataStoreRepository(
     }
 
     override suspend fun updateMeasurementUnitType(type: MeasurementUnitType) {
-        logger.d("updateMeasurementUnitType: $type")
         dataStore.setMeasurementUnit(type.name)
     }
 

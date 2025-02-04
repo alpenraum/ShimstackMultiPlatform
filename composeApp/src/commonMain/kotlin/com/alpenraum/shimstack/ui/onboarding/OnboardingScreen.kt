@@ -33,20 +33,26 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.alpenraum.shimstack.base.BuildInfo
 import com.alpenraum.shimstack.ui.base.compose.components.LargeButton
-import com.alpenraum.shimstack.ui.base.compose.theme.AppTheme
+import com.alpenraum.shimstack.ui.base.compose.components.LargeSecondaryButton
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.resources.stringResource
 import shimstackmultiplatform.composeapp.generated.resources.Res
 import shimstackmultiplatform.composeapp.generated.resources.ic_onboarding_background
 import shimstackmultiplatform.composeapp.generated.resources.ic_onboarding_foreground
+import shimstackmultiplatform.composeapp.generated.resources.onboarding_add_first_bike
+import shimstackmultiplatform.composeapp.generated.resources.onboarding_skip_to_app
+import shimstackmultiplatform.composeapp.generated.resources.onboarding_welcome_header
+import shimstackmultiplatform.composeapp.generated.resources.onboarding_welcome_sub_header
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun OnboardingScreen(
     onSkipButtonClicked: () -> Unit,
     modifier: Modifier = Modifier,
-    onAddBikeClicked: () -> Unit
+    onAddBikeClicked: () -> Unit,
+    onAutoFillClick: () -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -55,12 +61,12 @@ fun OnboardingScreen(
     ) {
         Spacer(modifier = Modifier.height(32.dp))
         Text(
-            text = "Welcome to Shimstack!",
+            text = stringResource(Res.string.onboarding_welcome_header),
             style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.Medium),
             textAlign = TextAlign.Center
         )
         Text(
-            text = "Welcome to your personal suspension expert.",
+            text = stringResource(Res.string.onboarding_welcome_sub_header),
             modifier = Modifier.padding(top = 8.dp)
         )
         Spacer(modifier = Modifier.height(32.dp))
@@ -95,7 +101,7 @@ fun OnboardingScreen(
                             )
                     ) {
                         Text(
-                            "Add my first bike",
+                            stringResource(Res.string.onboarding_add_first_bike),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
@@ -109,9 +115,26 @@ fun OnboardingScreen(
                             )
                     ) {
                         Text(
-                            "Take me to the app",
+                            stringResource(Res.string.onboarding_skip_to_app),
                             style = MaterialTheme.typography.titleMedium
                         )
+                    }
+
+                    if (BuildInfo.isDebug()) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        LargeSecondaryButton(
+                            onClick = onAutoFillClick,
+                            colors =
+                                ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                                )
+                        ) {
+                            Text(
+                                "DEBUG ONLY - Autofill bikes with test data",
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(32.dp))
@@ -174,18 +197,6 @@ fun OnboardingScreen(
                     )
                 }
             }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-    AppTheme {
-        OnboardingScreen(
-            onSkipButtonClicked = { },
-            modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
-        ) {
         }
     }
 }

@@ -22,6 +22,8 @@
     <string name="label_tire_width">Reifenbreite</string>
     <string name="label_internal_rim_width">Interne Felgenbreite</string>
     <string name="label_tire_pressure">Reifendruck</string>
+    <string name="btn_confirm">Bestätigen</string>
+    <string name="btn_close">Schließen</string>
 
     <string name="tire">Reifen</string>
     <string name="rear">Hinten</string>
@@ -31,16 +33,19 @@
     <string name="shock">Dämpfer</string>
 
     <string name="pressure">Druck</string>
+    <string name="sag">Sag</string>
     <string name="comp">Comp</string>
     <string name="rebound">Rebound</string>
     <string name="tokens">Tokens</string>
     <string name="metric">Metrisch</string>
     <string name="imperial">Imperial</string>
+    <string name="clicks">Klicks</string>
 
     <string name="fab_add_bike">Neues Fahrrad hinzufügen</string>
     <string name="copy_add_new_bike">Füge dein erstes Fahrrrad hinzu!</string>
 
     <string name="title_home">Home</string>
+    <string name="title_setup_troubleshoot">Setup Wizard</string>
     <string name="label_continue">Weiter</string>
     <string name="label_next_step">Nächster Schritt</string>
     <string name="label_yes">Ja</string>
@@ -82,4 +87,75 @@
     <string name="label_light_theme">Hell</string>
     <string name="label_dark_theme">Dunkel</string>
     <string name="label_auto_theme">Auto</string>
+
+    <string name="setup_wizard_primary_cta">Ich brauche Hilfe</string>
+    <string name="setup_wizard_button_see_history">Vorherige Empfehlungen</string>
+    <string name="setup_wizard_label_no_bikes">Du musst zuerst ein Bike erstellen bevor du den Setup Wizard verwenden kannst. Du kannst das am Homescreen machen!</string>
+
+
+
+    <string name="setup_wizard_label_recommendation_header">Versuch das:</string>
+    <string name="setup_wizard_label_recommendation_decrease">Reduziere %1$s %2$s um</string>
+    <string name="setup_wizard_label_recommendation_increase">Erhöhe %1$s %2$s um</string>
+    <string name="setup_wizard_label_recommendation_cta">Hat das dein Gefühl verbessert?</string>
+    <string name="setup_wizard_label_recommendation_is_front">Ist das Problem in der Front?</string>
+    <string name="setup_wizard_label_recommendation_is_high_speed">Kommt dieses Problem nur bei harten Schlägen wie Landungen oder Wurzeln vor?</string>
+
+    <string name="setup_wizard_label_updated_sus_pressure">Sag uns deine neuen Dämpfer Drücke nachdem du den Sag angepasst hast.</string>
+
+
+    <string name="setup_wizard_button_select_symptom">Das ist mein Symptom</string>
+
+    <string name="btn_home_edit_detail_cards">Detailkarten bearbeiten</string>
+    <string name="new_bike_label_separate_high_low">Separate High- und Low-speed Druckstufe?</string>
+    <string name="new_bike_label_separate_high_low_rebound">Separate High- und Low-speed Zugstufe?</string>
+
+    <string name="onboarding_welcome_header">Willkommen bei Shimstack!</string>
+    <string name="onboarding_welcome_sub_header">Willkommen bei deinem persönlichen Fahrwerksexperten.</string>
+    <string name="onboarding_add_first_bike">Erstelle mein erstes Bike</string>
+    <string name="onboarding_skip_to_app">Bring mich zur App</string>
+
+    <string name="symptom_understeer_title">Untersteuern</string>
+    <string name="symptom_understeer_description">Beim Einlenken fühlt es sich an, als wolle das Bike geradeaus fahren. Wenn man drängt, fühlt es sich an, als würde das Vorderrad ausbrechen.</string>
+
+    <string name="symptom_oversteer_title">Übersteuern</string>
+    <string name="symptom_oversteer_description">Das Hinterrad rutscht in Kurven gerne weg.</string>
+
+    <string name="symptom_sluggish_handling_title">Schwergängiges Fahrverhalten</string>
+    <string name="symptom_sluggish_handling_description">Das Bike fühlt sich träge an. Es wechselt sehr langsam die Richtung und hört nicht wirklich auf deine Eingaben.</string>
+
+    <string name="symptom_wallowy_title">Nicht in Kontrolle</string>
+    <string name="symptom_wallowy_description">Das Bike fühlt sich instabil an. Es fährt nicht geradeaus und deine Eingaben werden nicht direkt auf das Bike übertragen.</string>
+
+    <string name="symptom_mush_title">Matschig</string>
+    <string name="symptom_mush_description">Du sitzt immer tief im Federweg und schlägt oft durch. Das Bike kann sich dadurch hart und unkomfortabel anfühlen.</string>
+
+    <string name="symptom_harsh_title">Harsch</string>
+    <string name="symptom_harsh_description">Das Bike fühlt sich bei kleinen Unebenheiten rau an. Arme und Beine ermüden schon nach kurzer Zeit und es fühlt sich an, als würde die Federung nichts tun.</string>
+
+    <string name="symptom_brake_dive_title">Starkes Eintauchen der Front beim Bremsen</string>
+    <string name="symptom_brake_dive_description">Die Front des Bikes taucht beim Bremsen tief in den Federweg ein. Man kann sich nicht in der Mitte halten und hat das Gefühl, zu viel Gewicht auf die Front zu legen</string>
+
+    <string name="symptom_steep_dive_title">Starkes Eintauchen der Front bei steilen Hängen</string>
+    <string name="symptom_steep_dive_description">Ähnlich wie beim Brake-Dive taucht die Front des Bike tief in den Federweg ein, wenn man etwas Steiles hinunterfährt. Man kann sich nicht in der Mitte halten und hat das Gefühl, zu viel Gewicht auf die Front zu legen.</string>
+
+    <string name="symptom_frequent_bottom_out_title">Häufiges Durchschlagen</string>
+    <string name="symptom_frequent_bottom_out_description">Dein Sag ist richtig eingestellt und das Bike fühlt sich gut an, aber du schlägst trotzdem regelmäßig durch, selbst bei kleineren Hindernissen.</string>
+
+    <string name="symptom_rare_full_travel_title">Selten voller Federweg</string>
+    <string name="symptom_rare_full_travel_description">Dein Sag ist richtig eingestellt und das Bike fühlt sich gut an, aber große Schläge fühlen sich etwas hart an und du nutzt nie den vollen Federweg.</string>
+
+    <string name="symptom_front_flip_on_jumps_title">Frontflip bei Sprüngen</string>
+    <string name="symptom_front_flip_on_jumps_description">Dein Bike hat zu viel Redbull-Rampage gesehen und will jetzt bei jedem Sprung einen Frontflip machen, ob du es willst oder nicht.</string>
+
+    <string name="symptom_packing_down_title">Bike bleibt im Federweg hängen</string>
+    <string name="symptom_packing_down_description">Besonders bei wiederholten Treffern wie bei Wurzeln und Felsen hat man das Gefühl, dass sich das Bike nicht schnell genug erholen kann und man dadurch herumgeschleudert wird.</string>
+
+    <string name="symptom_blows_through_travel_title">Das Bike fällt durch den Federweg</string>
+    <string name="symptom_blows_through_travel_description">Der Sag ist gut, aber das Bike fühlt sich nicht unterstützend an und fällt durch den größten Teil des Federwegs einfach durch.</string>
+
+    <string name="symptom_too_much_comp_title">Das Bike ist unkomfortabel</string>
+    <string name="symptom_too_much_comp_description">Dein Sag ist gut, aber das Rad fühlt sich hart an und es ist schwierig, tiefer in den Federweg zu kommen.</string>
+
+
 </resources>
