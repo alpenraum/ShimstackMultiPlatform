@@ -1,7 +1,7 @@
-package com.alpenraum.shimstack.domain.troubleshooting.symptomsolvers
+package com.alpenraum.shimstack.domain.setupwizard.symptomsolvers
 
 import com.alpenraum.shimstack.domain.model.tire.Tire
-import com.alpenraum.shimstack.domain.troubleshooting.tire.CalculateTirePressureOffsetForSymptomUseCase
+import com.alpenraum.shimstack.domain.setupwizard.tire.CalculateTirePressureOffsetForSymptomUseCase
 import org.koin.core.annotation.Single
 
 @Single

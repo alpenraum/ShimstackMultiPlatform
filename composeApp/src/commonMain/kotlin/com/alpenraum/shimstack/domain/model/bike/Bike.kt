@@ -4,7 +4,7 @@ import com.alpenraum.shimstack.domain.model.measurementunit.Distance
 import com.alpenraum.shimstack.domain.model.measurementunit.Pressure
 import com.alpenraum.shimstack.domain.model.suspension.Suspension
 import com.alpenraum.shimstack.domain.model.tire.Tire
-import com.alpenraum.shimstack.domain.troubleshooting.SetupRecommendation
+import com.alpenraum.shimstack.domain.setupwizard.SetupRecommendation
 
 data class Bike(
     val id: Int? = null,

@@ -12,9 +12,9 @@ import com.alpenraum.shimstack.domain.bikeservice.BikeRepository
 import com.alpenraum.shimstack.domain.model.bike.Bike
 import com.alpenraum.shimstack.domain.model.measurementunit.MeasurementUnitType
 import com.alpenraum.shimstack.domain.model.measurementunit.Pressure
-import com.alpenraum.shimstack.domain.troubleshooting.GetSetupSolutionUseCase
-import com.alpenraum.shimstack.domain.troubleshooting.SetupRecommendation
-import com.alpenraum.shimstack.domain.troubleshooting.SetupSymptom
+import com.alpenraum.shimstack.domain.setupwizard.GetSetupSolutionUseCase
+import com.alpenraum.shimstack.domain.setupwizard.SetupRecommendation
+import com.alpenraum.shimstack.domain.setupwizard.SetupSymptom
 import com.alpenraum.shimstack.domain.userSettings.GetUserSettingsUseCase
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

@@ -1,6 +1,6 @@
 package com.alpenraum.shimstack.ui.setupTroubleshooting
 
-import com.alpenraum.shimstack.domain.troubleshooting.SetupSymptom
+import com.alpenraum.shimstack.domain.setupwizard.SetupSymptom
 import org.jetbrains.compose.resources.StringResource
 import org.koin.core.annotation.Single
 import shimstackmultiplatform.composeapp.generated.resources.Res

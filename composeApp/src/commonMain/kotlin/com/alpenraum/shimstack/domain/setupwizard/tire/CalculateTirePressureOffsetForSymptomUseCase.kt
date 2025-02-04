@@ -1,7 +1,7 @@
-package com.alpenraum.shimstack.domain.troubleshooting.tire
+package com.alpenraum.shimstack.domain.setupwizard.tire
 
 import com.alpenraum.shimstack.domain.model.tire.Tire
-import com.alpenraum.shimstack.domain.troubleshooting.SetupAnalysisResult
+import com.alpenraum.shimstack.domain.setupwizard.SetupAnalysisResult
 import org.koin.core.annotation.Single
 
 @Single

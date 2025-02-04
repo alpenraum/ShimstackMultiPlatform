@@ -1,7 +1,7 @@
 package com.alpenraum.shimstack.ui.setupTroubleshooting
 
 import com.alpenraum.shimstack.domain.model.measurementunit.Pressure
-import com.alpenraum.shimstack.domain.troubleshooting.SetupRecommendation
+import com.alpenraum.shimstack.domain.setupwizard.SetupRecommendation
 import com.alpenraum.shimstack.domain.userSettings.GetUserSettingsUseCase
 import com.alpenraum.shimstack.ui.bikeDetails.getPressureStringRes
 import kotlinx.coroutines.flow.first

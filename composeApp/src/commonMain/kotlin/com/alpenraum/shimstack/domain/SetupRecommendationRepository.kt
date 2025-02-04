@@ -1,6 +1,6 @@
 package com.alpenraum.shimstack.domain
 
-import com.alpenraum.shimstack.domain.troubleshooting.SetupRecommendation
+import com.alpenraum.shimstack.domain.setupwizard.SetupRecommendation
 import kotlinx.coroutines.flow.Flow
 
 interface SetupRecommendationRepository {

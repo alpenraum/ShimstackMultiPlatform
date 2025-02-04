@@ -1,7 +1,7 @@
-package com.alpenraum.shimstack.domain.troubleshooting.frontSuspension
+package com.alpenraum.shimstack.domain.setupwizard.frontSuspension
 
 import com.alpenraum.shimstack.domain.model.suspension.Suspension
-import com.alpenraum.shimstack.domain.troubleshooting.SetupAnalysisResult
+import com.alpenraum.shimstack.domain.setupwizard.SetupAnalysisResult
 import org.koin.core.annotation.Single
 
 @Single

@@ -1,8 +1,9 @@
-package com.alpenraum.shimstack.domain.troubleshooting
+package com.alpenraum.shimstack.domain.setupwizard
 
 import com.alpenraum.shimstack.domain.SetupRecommendationRepository
 import com.alpenraum.shimstack.domain.model.bike.Bike
-import com.alpenraum.shimstack.domain.troubleshooting.symptomsolvers.UndersteerSymptomSolver
+import com.alpenraum.shimstack.domain.setupwizard.symptomsolvers.OversteerSymptomSolver
+import com.alpenraum.shimstack.domain.setupwizard.symptomsolvers.UndersteerSymptomSolver
 import org.koin.core.annotation.Single
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -14,7 +15,8 @@ import kotlin.uuid.Uuid
 @Single
 class GetSetupSolutionUseCase(
     private val setupRecommendationRepository: SetupRecommendationRepository,
-    private val understeerSymptomSolver: UndersteerSymptomSolver
+    private val understeerSymptomSolver: UndersteerSymptomSolver,
+    private val oversteerSymptomSolver: OversteerSymptomSolver
 ) {
     @OptIn(ExperimentalUuidApi::class)
     suspend operator fun invoke(
@@ -39,7 +41,7 @@ class GetSetupSolutionUseCase(
                     SetupRecommendation(
                         wizardSession = currentWizardSession,
                         bikeId = bike.id ?: -1,
-                        rearTirePressureDelta = understeerSymptomSolver.solve(bike.rearTire)
+                        rearTirePressureDelta = oversteerSymptomSolver.solve(bike.rearTire)
                     )
 
                 SetupSymptom.MUSH -> TODO()

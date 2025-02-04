@@ -6,9 +6,8 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.alpenraum.shimstack.data.db.AppDatabase
 import com.alpenraum.shimstack.data.model.bike.BikeDTO
-import com.alpenraum.shimstack.domain.troubleshooting.SetupRecommendation
+import com.alpenraum.shimstack.domain.setupwizard.SetupRecommendation
 import kotlinx.datetime.Clock
-import kotlinx.serialization.Serializable
 
 @Serializable
 @Entity(

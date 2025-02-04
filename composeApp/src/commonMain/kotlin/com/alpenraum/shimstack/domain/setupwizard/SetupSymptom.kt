@@ -1,4 +1,4 @@
-package com.alpenraum.shimstack.domain.troubleshooting
+package com.alpenraum.shimstack.domain.setupwizard
 
 enum class SetupSymptom(
     val requiresLocation: Boolean = false,

@@ -2,7 +2,7 @@ package com.alpenraum.shimstack.data.setuprecommendation
 
 import com.alpenraum.shimstack.data.db.SetupRecommendationDAO
 import com.alpenraum.shimstack.domain.SetupRecommendationRepository
-import com.alpenraum.shimstack.domain.troubleshooting.SetupRecommendation
+import com.alpenraum.shimstack.domain.setupwizard.SetupRecommendation
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.Single

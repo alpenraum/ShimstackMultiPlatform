@@ -1,4 +1,4 @@
-package com.alpenraum.shimstack.domain.troubleshooting
+package com.alpenraum.shimstack.domain.setupwizard
 
 import com.alpenraum.shimstack.data.model.setupRecommendation.SetupRecommendationDTO
 
